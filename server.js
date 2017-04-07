@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-angular = require('angular');
 
 app.use(express.static(__dirname + '/public'));
 
