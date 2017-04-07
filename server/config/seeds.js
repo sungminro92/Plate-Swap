@@ -33,11 +33,12 @@ var db = mongoose.connect('mongodb://localhost:27017/barrels');
 // 	created_at: Date
 // });
 
+User.remove({});
+
 var user1 = new User({
 	firstName: 'Harry',
 	lastName: '',
 	email: 'randomemail@gmail.com',
-	password_digest: '',
 	items: {
 		name: 'makeup',
 		description: 'makeup',
@@ -49,6 +50,13 @@ var user1 = new User({
 		},
 		state: 'GA'
 	}
+});
+
+user1.save(function createUser(err){
+	if (err) {
+		console.log(err);}
+		console.log('user created');
+
 });
 
 // db.('open', function() {
