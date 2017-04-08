@@ -32,7 +32,7 @@ var UserSchema = new Schema({
 	firstName: String,
 	lastName: String,
 	email: String,
-	password_digest: String,
+	password: String,
 	items: [ItemSchema],
 })
 
