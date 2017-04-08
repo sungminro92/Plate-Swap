@@ -70,16 +70,18 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-HomeController.$inject = [];
-function HomeController() {
+HomeController.$inject = ['UsersService'];
+
+function HomeController(UsersService) {
   const vm = this;
+  vm.addUser = addUser;
+  vm.newUser = {};
 
-  activate();
-
-  function activate() {
-    console.log('Home controller activated');
-  }
-}
+  function addUser(newUser) {
+    console.log(newUser);
+    UsersService.addToUserCollection(newUser);
+  };
+};
 
 module.exports = HomeController;
 
@@ -87,8 +89,8 @@ module.exports = HomeController;
 /* 1 */
 /***/ (function(module, exports) {
 
-ItemsController.$inject = ['ItemsService'];
-function ItemsController(ItemsService) {
+ItemsController.$inject = ['UsersService'];
+function ItemsController(UsersService) {
   const vm = this;
 
   vm.items = [];
@@ -101,7 +103,7 @@ function ItemsController(ItemsService) {
   }
 
   function loadAllItems() {
-    ItemsService.loadAll().then(function resolve(response) {
+    UsersService.loadAll().then(function resolve(response) {
       vm.items = response.data.items;
     });
   };
@@ -126,6 +128,9 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   }).state('items', {
     template: '<items></items>',
     url: '/items'
+  }).state('login', {
+    template: '<login></login>',
+    url: '/login'
   });
   $urlRouterProvider.otherwise('/');
 };
@@ -38242,7 +38247,7 @@ module.exports = angular;
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='home'>\n  <h1>Home</h1>\n  <p>Hello from the Home component.</p>\n</div>\n";
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser($ctrl.newUser)'>\n      <input class='form-control' type='text' placeholder='First Name' ng-model='$ctrl.newUser.firstName'>\n      <input class='form-control' type='text' placeholder='Last Name' ng-model='$ctrl.newUser.lastName'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
 
 /***/ }),
 /* 10 */

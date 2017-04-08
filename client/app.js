@@ -16,6 +16,10 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   .state('items', {
     template: '<items></items>',
     url: '/items'
+  })
+  .state('login', {
+    template: '<login></login>',
+    url: '/login'
   });
   $urlRouterProvider.otherwise('/');
 };
