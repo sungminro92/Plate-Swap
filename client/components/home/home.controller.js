@@ -1,12 +1,15 @@
-HomeController.$inject = [];
-function HomeController() {
+HomeController.$inject = ['UsersService'];
+
+function HomeController(UsersService) {
   const vm = this;
+  vm.addUser = addUser;
+  vm.newUser = {};
 
-  activate();
-
-  function activate() {
-    console.log('Home controller activated');
-  }
-}
+  function addUser(newUser) {
+    console.log(newUser);
+    UsersService
+    .addToUserCollection(newUser)
+  };
+};
 
 module.exports = HomeController;

@@ -1,5 +1,5 @@
-ItemsController.$inject = ['ItemsService'];
-function ItemsController(ItemsService) {
+ItemsController.$inject = ['UsersService'];
+function ItemsController(UsersService) {
   const vm = this;
 
   vm.items = [];
@@ -12,7 +12,7 @@ function ItemsController(ItemsService) {
   }
 
   function loadAllItems() {
-    ItemsService
+    UsersService
     .loadAll()
     .then(function resolve(response){
       vm.items = response.data.items;
