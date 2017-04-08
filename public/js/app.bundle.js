@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -90,6 +90,26 @@ module.exports = HomeController;
 /* 1 */
 /***/ (function(module, exports) {
 
+ItemsNewController.$inject = ['UsersService'];
+
+function ItemsNewController(UsersService) {
+  const vm = this;
+  vm.addItem = addItem;
+  vm.newItem = {};
+
+  // HOW IT DOES STUFF
+  function addItem(newItem) {
+    console.log(newItem);
+    UsersService.addItem(newItem);
+  };
+};
+
+module.exports = ItemsNewController;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
 ItemsController.$inject = ['UsersService'];
 function ItemsController(UsersService) {
   const vm = this;
@@ -113,11 +133,11 @@ function ItemsController(UsersService) {
 module.exports = ItemsController;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(8);
-__webpack_require__(6);
+const angular = __webpack_require__(10);
+__webpack_require__(8);
 
 angular.module('projectThree', ['ui.router']).config(routerSetup);
 
@@ -132,16 +152,19 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   }).state('login', {
     template: '<login></login>',
     url: '/login'
+  }).state('itemsNew', {
+    template: '<items-new></items-new>',
+    url: '/items/new'
   });
   $urlRouterProvider.otherwise('/');
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(9);
+const template = __webpack_require__(11);
 
 const component = {
   controller: controller,
@@ -151,11 +174,25 @@ const component = {
 angular.module('projectThree').component('home', component);
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(1);
-const template = __webpack_require__(10);
+const template = __webpack_require__(12);
+
+const ItemsNewComponent = {
+  template: template,
+  controller: controller
+};
+
+angular.module('projectThree').component('itemsNew', ItemsNewComponent);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(2);
+const template = __webpack_require__(13);
 
 const component = {
   controller: controller,
@@ -165,7 +202,7 @@ const component = {
 angular.module('projectThree').component('items', component);
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports) {
 
 angular.module('projectThree').service('UsersService', UsersService);
@@ -177,6 +214,7 @@ function UsersService($http) {
 
   self.loadAll = loadAll;
   self.addToUserCollection = addToUserCollection;
+  self.addItem = addItem;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -188,10 +226,15 @@ function UsersService($http) {
   function addToUserCollection(newUser) {
     return $http.post('/api/users', newUser);
   };
+
+  // Tells server to add new item to database
+  function addItem(newItem) {
+    return $http.post('/api/items', newItem);
+  };
 };
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
 /**
@@ -4880,7 +4923,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /**
@@ -38257,35 +38300,43 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(7);
+__webpack_require__(9);
 module.exports = angular;
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser($ctrl.newUser)'>\n      <input class='form-control' type='text' placeholder='First Name' ng-model='$ctrl.newUser.firstName'>\n      <input class='form-control' type='text' placeholder='Last Name' ng-model='$ctrl.newUser.lastName'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n  <p>Hello from the Items component.</p>\n  <ul>\n    <li ng-repeat=\"items in $ctrl.items\">\n      Name: {{ items.name }}\n    </li>\n  </ul>\n</div>\n";
+module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"Name\" ng-model=\"$ctrl.newItem.name\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
-/* 11 */
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n  <p>Hello from the Items component.</p>\n  <ul>\n    <li ng-repeat=\"items in $ctrl.items\">\n      Name: {{ items.name }}\n      <br>\n      Full Object: {{ items }}\n    </li>\n  </ul>\n</div>\n";
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(2);
 __webpack_require__(3);
-__webpack_require__(0);
 __webpack_require__(4);
+__webpack_require__(0);
+__webpack_require__(5);
 __webpack_require__(1);
-module.exports = __webpack_require__(5);
+__webpack_require__(6);
+__webpack_require__(2);
+module.exports = __webpack_require__(7);
 
 
 /***/ })

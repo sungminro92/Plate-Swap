@@ -1,0 +1,25 @@
+<div class="add-new-item">
+  <h1> Create a Listing </h1>
+
+  <form ng-submit="$ctrl.addItem($ctrl.newItem)">
+    <input type="text" placeholder="Name" ng-model="$ctrl.newItem.name">
+    <input type="text" placeholder="Description" ng-model="$ctrl.newItem.description">
+    <input type="number" placeholder="Price" ng-model="$ctrl.newItem.price">
+    <input type="text" placeholder="Image URL" ng-model="$ctrl.newItem.image">
+    <input type="text" placeholder="City" ng-model="$ctrl.newItem.city">
+    <input type="text" placeholder="State" ng-model="$ctrl.newItem.state">
+  <br><br>
+  <strong>New Item Info:</strong><br>
+  Name: {{ $ctrl.newItem.name }}
+  <br>
+  Description: {{ $ctrl.newItem.description }}
+  <br>
+  Price: {{ $ctrl.newItem.price }}
+  <br>
+  City: {{ $ctrl.newItem.city }}
+  <br>
+  State: {{ $ctrl.newItem.state }}
+  <br>
+  <input type="submit" value="Post Now">
+  </form>
+</div>

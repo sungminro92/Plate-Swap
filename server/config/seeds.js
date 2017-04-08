@@ -52,13 +52,6 @@ var user1 = new User({
 	}
 });
 
-user1.save(function createUser(err){
-	if (err) {
-		console.log(err);}
-		console.log('user created');
-
-});
-
 // db.('open', function() {
 // 	console.log('database connected');
 // });

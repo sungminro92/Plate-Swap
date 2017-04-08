@@ -12,7 +12,7 @@ var ItemSchema = new Schema({
 	name: String,
 	description: String,
 	price: Number,
-	Image: String,
+	image: String,
 	city: String,
 	comments: [CommentSchema],
 	state: String,
