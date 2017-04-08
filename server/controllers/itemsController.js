@@ -3,15 +3,22 @@ const router = express.Router();
 const Item = require('../models/Item');
 const User = require('../models/User');
 
-// Index all items in gallery
-router.get('/', function indexItems(req,res) {
-  res.json( { message: 'This is the items index'});
+// NEED TO CHECK AND MAKE SURE THIS IS PROPERLY GRABBING INFO
+// Index all items by all users (gallery)
+router.get('/', function showIndivItem(req, res){
+  User
+  .distinct('items')
+  .exec(function(err, items) {
+    if(err) {console.log(err)}
+    res.json({
+      items: items
+    });
+  });
 });
 
+
 // Show individual item
-router.get('/:itemId', function showIndivItem(req, res){
-  res.json( {message: 'This is a single item'});
-});
+
 
 
 module.exports = router;
