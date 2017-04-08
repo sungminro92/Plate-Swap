@@ -19,8 +19,11 @@ app.use(bodyParser.urlencoded({ extended: true}));
 mongoose.connect(process.env.MONGODB_URI);
 // mongoose.connect('mongodb://localhost:27017/proj3');
 
-// const itemsController = require('./server/controllers/itemsController');
-// app.use('/items', itemsController);
+
+// Routes
+const itemsController = require('./server/controllers/itemsController');
+
+app.use('/items', itemsController);
 
 
 
