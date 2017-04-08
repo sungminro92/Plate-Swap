@@ -9,6 +9,7 @@ function UsersService($http) {
 
   self.loadAll = loadAll;
   self.addToUserCollection = addToUserCollection;
+  self.addItem = addItem;
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -21,5 +22,11 @@ function UsersService($http) {
   function addToUserCollection(newUser) {
     return $http
       .post('/api/users', newUser);
+  };
+
+  // Tells server to add new item to database
+  function addItem(newItem) {
+    return $http
+      .post('/api/items', newItem);
   };
 };
