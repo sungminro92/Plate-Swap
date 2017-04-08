@@ -9,7 +9,9 @@ angular
 routerSetup.$inject = ['$stateProvider', '$urlRouterProvider'];
 function routerSetup($stateProvider, $urlRouterProvider) {
   $stateProvider
-  .state('/', {
-    template: '<h2>Hello from UI Router</h2>'
+  .state('home', {
+    template: '<home></home>',
+    url: '/'
   });
+  $urlRouterProvider.otherwise('/');
 };
