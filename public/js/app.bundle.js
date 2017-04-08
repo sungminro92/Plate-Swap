@@ -70,7 +70,18 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/emartin/ga/wdi/Project-3/client/components/home/home.controller.js'");
+HomeController.$inject = [];
+function HomeController() {
+  const vm = this;
+
+  activate();
+
+  function activate() {
+    console.log('Home controller activated');
+  }
+}
+
+module.exports = HomeController;
 
 /***/ }),
 /* 1 */
@@ -83,16 +94,26 @@ angular.module('projectThree', ['ui.router']).config(routerSetup);
 
 routerSetup.$inject = ['$stateProvider', '$urlRouterProvider'];
 function routerSetup($stateProvider, $urlRouterProvider) {
-  $stateProvider.state('/', {
-    template: '<h2>Hello from UI Router</h2>'
+  $stateProvider.state('home', {
+    template: '<home></home>',
+    url: '/'
   });
+  $urlRouterProvider.otherwise('/');
 };
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/emartin/ga/wdi/Project-3/client/components/home/home.component.js'");
+const controller = __webpack_require__(0);
+const template = __webpack_require__(6);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('projectThree').component('home', component);
 
 /***/ }),
 /* 3 */
@@ -38169,7 +38190,12 @@ module.exports = angular;
 
 
 /***/ }),
-/* 6 */,
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class='home'>\n  <h1>Home</h1>\n  <p>Hello from the Home component.</p>\n</div>\n";
+
+/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
