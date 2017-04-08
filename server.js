@@ -23,7 +23,4 @@ mongoose.connect(process.env.MONGODB_URI);
 // Routes
 const itemsController = require('./server/controllers/itemsController');
 
-app.use('/items', itemsController);
-
-
-
+app.use('/api/items', itemsController);
