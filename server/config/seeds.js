@@ -6,7 +6,7 @@ var Comment = require('../models/Comment.js');
 
 mongoose.Promise = global.Promise;
 
-var db = mongoose.connect('mongodb://localhost:27017/barrels');
+var db = mongoose.connect('mongodb://localhost:27017/proj3');
 
 // var UserSchema = new Schema({
 // 	firstName: String,
