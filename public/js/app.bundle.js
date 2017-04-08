@@ -63,27 +63,60 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+HomeController.$inject = [];
+function HomeController() {
+  const vm = this;
+
+  activate();
+
+  function activate() {
+    console.log('Home controller activated');
+  }
+}
+
+module.exports = HomeController;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(3);
-__webpack_require__(1);
+const angular = __webpack_require__(5);
+__webpack_require__(3);
 
 angular.module('projectThree', ['ui.router']).config(routerSetup);
 
 routerSetup.$inject = ['$stateProvider', '$urlRouterProvider'];
 function routerSetup($stateProvider, $urlRouterProvider) {
-  $stateProvider.state('/', {
-    template: '<h2>Hello from UI Router</h2>'
+  $stateProvider.state('home', {
+    template: '<home></home>',
+    url: '/'
   });
+  $urlRouterProvider.otherwise('/');
 };
 
 /***/ }),
-/* 1 */
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(0);
+const template = __webpack_require__(6);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('projectThree').component('home', component);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 /**
@@ -4772,7 +4805,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /**
@@ -38149,17 +38182,25 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(2);
+__webpack_require__(4);
 module.exports = angular;
 
 
 /***/ }),
-/* 4 */
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class='home'>\n  <h1>Home</h1>\n  <p>Hello from the Home component.</p>\n</div>\n";
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
+__webpack_require__(2);
 module.exports = __webpack_require__(0);
 
 
