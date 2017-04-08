@@ -162,20 +162,7 @@ angular.module('projectThree').component('items', component);
 /* 5 */
 /***/ (function(module, exports) {
 
-angular.module('projectThree').service('ItemsService', ItemsService);
-
-ItemsService.$inject = ['$http'];
-
-function ItemsService($http) {
-  const self = this;
-
-  self.loadAll = loadAll;
-
-  function loadAll() {
-    console.log('load all function fired from service');
-    return $http.get('/api/items');
-  };
-};
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/emartin/ga/wdi/Project-3/client/components/services/users.service.js'");
 
 /***/ }),
 /* 6 */
