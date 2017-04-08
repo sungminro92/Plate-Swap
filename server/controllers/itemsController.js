@@ -4,7 +4,7 @@ const Item = require('../models/Item');
 const User = require('../models/User');
 
 // NEED TO CHECK AND MAKE SURE THIS IS PROPERLY GRABBING INFO
-// Index all items by all users (gallery)
+// [GET] Index all items by all users (gallery)
 router.get('/', function showIndivItem(req, res){
   User
   .distinct('items')
@@ -15,10 +15,6 @@ router.get('/', function showIndivItem(req, res){
     });
   });
 });
-
-
-// Show individual item
-
 
 
 module.exports = router;
