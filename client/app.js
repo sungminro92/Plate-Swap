@@ -13,6 +13,10 @@ function routerSetup($stateProvider, $urlRouterProvider) {
     template: '<home></home>',
     url: '/'
   })
+  .state('about', {
+    template: '<about></about>',
+    url: '/about'
+  })
   .state('items', {
     template: '<items></items>',
     url: '/items'
