@@ -1,26 +1,28 @@
+// THIS IS WHERE SEEDED DATA LIVES
+
 var mongoose = require('mongoose'); //requiring mongoose.
 
 var Schema = mongoose.Schema;
 
-// commentSchema
-var CommentSchema = new Schema({
-	text: String,
-	created_at: Date
+var UserSchema = new Schema({
+	name: String,
+	email: String,
+	passwordDigest: String,
+	token: Number
 });
 
-var ItemSchema = new Schema({
-	name: String,
+var ItemSchema = new Schema({ // item Schema
+	user: UserSchema,
+	title: String,
 	description: String,
-	price: Number,
 	image: String,
-	city: String,
-	comments: [CommentSchema],
-	state: String,
 	created_at: Date,
 	updated_at: Date,
+	used: Boolean,
 });
 
-ItemSchema.pre('save', function(next) {
+ItemSchema.pre('save', function(next) { 
+	used = false;
 	now = new Date();
 	this.updated_at = now;
 
@@ -28,13 +30,18 @@ ItemSchema.pre('save', function(next) {
 	next();
 });
 
-var UserSchema = new Schema({
-	firstName: String,
-	lastName: String,
-	email: String,
-	password: String,
-	items: [ItemSchema],
-})
+var CommentSchema = new Schema({ // comment Schema
+	user: UserSchema,
+	item: ItemSchema,
+	text: String,
+	created_at: Date
+});
+
+CommentSchema.pre('save', function(next) { 
+	now = new Date();
+	if (!this.created_at) {this.created_at = now}
+	next();
+});
 
 var UserModel = mongoose.model('User', UserSchema);
 var ItemModel = mongoose.model('Item', ItemSchema);

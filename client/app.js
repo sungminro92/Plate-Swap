@@ -2,7 +2,7 @@ const angular = require('angular');
 require('angular-ui-router');
 
 angular
-	.module('projectThree', ['ui.router'])
+  .module('projectThree', ['ui.router'])
   .config(routerSetup)
 
 
@@ -12,6 +12,10 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   .state('home', {
     template: '<home></home>',
     url: '/'
+  })
+  .state('about', {
+    template: '<about></about>',
+    url: '/about'
   })
   .state('items', {
     template: '<items></items>',

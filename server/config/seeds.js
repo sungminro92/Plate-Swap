@@ -6,50 +6,124 @@ var Comment = require('../models/Comment.js');
 
 mongoose.Promise = global.Promise;
 
-var db = mongoose.connect('mongodb://localhost:27017/proj3');
+var db = mongoose.connect('mongodb://localhost:27017/barrels');
 
-// var UserSchema = new Schema({
-// 	firstName: String,
-// 	lastName: String,
-// 	email: String,
-// 	password_digest: String,
-// 	items: [ItemSchema],
-// })
-
-// var ItemSchema = new Schema({
-// 	name: String,
-// 	description: String,
-// 	price: Number,
-// 	image: String,
-// 	city: String,
-// 	comments: [CommentSchema],
-// 	state: String,
-// 	created_at: Date,
-// 	updated_at: Date,
-// });
-
-// var CommentSchema = new Schema({
-// 	text: String,
-// 	created_at: Date
-// });
-
-User.remove({});
+// reset db
+User.remove({}, function(err){
+  console.log(err);
+});
+Item.remove({}, function(err){
+  console.log(err);
+});
+Comment.remove({}, function(err){
+  console.log(err);
+});
 
 var user1 = new User({
-	firstName: 'Harry',
-	lastName: '',
-	email: 'randomemail@gmail.com',
-	items: {
-		name: 'makeup',
-		description: 'makeup',
-		price: 24,
-		image: 'string',
-		city: 'string',
-		comments: {
-			text: 'string',
-		},
-		state: 'GA'
-	}
+	name: 'Alpha',
+	email: 'alpha@gmail.com',
+});
+var user2 = new User({
+	name: 'Beta',
+	email: 'beta@gmail.com',
+});
+var user3 = new User({
+	name: 'Gamma',
+	email: 'gamma@gmail.com',
+});
+
+var item1 = new Item({
+	title: 'This is the first item',
+	description: 'Description of first item',
+	image: 'http://i.imgur.com/614QqTm.jpg',
+	created_at: Date(),
+	updated_at: Date(),
+	used: false
+});
+var item2 = new Item({
+	title: 'This is the second item',
+	description: 'Description of second item',
+	image: 'http://i.imgur.com/614QqTm.jpg',
+	created_at: Date(),
+	updated_at: Date(),
+	used: false
+});
+var item3 = new Item({
+	title: 'This is the third item',
+	description: 'Description of third item',
+	image: 'http://i.imgur.com/614QqTm.jpg',
+	created_at: Date(),
+	updated_at: Date(),
+	used: false
+});
+
+var comment1 = new Comment({
+	text: 'This is the first comment',
+	created_at: Date()
+});
+var comment2 = new Comment({
+	text: 'This is the second comment',
+	created_at: Date()
+});
+var comment3 = new Comment({
+	text: 'This is the third comment',
+	created_at: Date()
+});
+var comment4 = new Comment({
+	text: 'This is the fourth comment',
+	created_at: Date()
+});
+var comment5 = new Comment({
+	text: 'This is the fifth comment',
+	created_at: Date()
+});
+var comment6 = new Comment({
+	text: 'This is the sixth comment',
+	created_at: Date()
+});
+
+var users = [user1, user2, user3];
+var items = [item1, item2, item3];
+var comments = [comment1, comment2, comment3, comment4, comment5, comment6];
+
+// User.remove({})
+// 	.then(function() {
+// 		return User.create(users);
+// 	})
+// 	.then(function() {
+// 		console.log(users)
+// 	})
+// 	.then(function(){
+//     mongoose.connection.close(function () {
+//       console.log('Mongoose connection disconnected');
+//     });
+
+comments.forEach(function(comment, i){
+	comment.user = users[i%users.length];
+	comment.item = items[i%items.length];
+	comment.save(function(err) {
+    if(err) { console.log(err); }
+    console.log("comment"+i);
+  });
+});
+
+items.forEach(function(item, i){
+	item.user = users[i];
+	item.save(function(err) {
+    if(err) { console.log(err); }
+    console.log("item"+i);
+  });
+});
+
+users.forEach(function(user, i){
+  user.save(function(err) {
+    if(err) { console.log(err); }
+    console.log("user"+i);
+  });
+});
+
+mongoose.connection.close(function () {
+	console.log('Mongoose connection disconnected');
 });
 
 // db.('open', function() {

@@ -17,5 +17,4 @@ router.post('/', function createNewUser(req, res){
   });
 });
 
-
 module.exports = router;
