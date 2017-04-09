@@ -13,6 +13,27 @@ router.get('/', function showIndivItem(req, res){
     res.json({
       items: items
     });
+  })
+});
+
+
+// [POST] Create new item
+router.post('/', function createNewItem(req, res){
+  console.log('body:', req.body);
+  var item = new Item({
+    user: req.session.currentUser,
+    //userId: req.session.currentUser.id
+    title: req.body.title,
+    description: req.body.description,
+    image: req.body.image
+  });
+  item.save(function(error){
+    if(error) {
+      response.json({message: 'Could not add new item'});
+    }
+    res.json({
+      item: item
+    });
   });
 });
 

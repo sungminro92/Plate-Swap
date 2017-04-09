@@ -20,6 +20,10 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   .state('login', {
     template: '<login></login>',
     url: '/login'
+  })
+  .state('itemsNew', {
+    template: '<items-new></items-new>',
+    url: '/items/new'
   });
   $urlRouterProvider.otherwise('/');
 };

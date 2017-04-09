@@ -27,7 +27,7 @@
     "express": "^4.15.2",
     "glob": "^7.1.1",
     "method-override": "^2.3.8",
-    "mongoose": "^4.9.3",
+    "mongoose": "^4.9.4",
     "nodemon": "^1.11.0",
     "webpack": "^2.3.3"
   },
