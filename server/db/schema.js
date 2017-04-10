@@ -6,7 +6,8 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({ // comment Schema
 	text: String,
-	created_at: Date
+	created_at: Date,
+	userId: String
 });
 
 CommentSchema.pre('save', function(next) {
@@ -41,8 +42,7 @@ var UserSchema = new Schema({
 	name: String,
 	email: String,
 	password: String,
-	token: Number,
-	items: [ItemSchema]
+	token: Number
 });
 
 

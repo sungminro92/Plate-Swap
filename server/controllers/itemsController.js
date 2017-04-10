@@ -6,12 +6,12 @@ const User = require('../models/User');
 // NEED TO CHECK AND MAKE SURE THIS IS PROPERLY GRABBING INFO
 // [GET] Index all items by all users (gallery)
 router.get('/', function showIndivItem(req, res){
-  User
+  Item
   .find({})
-  .exec(function(err, users) {
+  .exec(function(err, items) {
     if(err) {console.log(err)}
     res.json({
-      users: users
+      items: items
     });
   })
 });

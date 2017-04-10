@@ -127,7 +127,6 @@ ItemsController.$inject = ['UsersService', 'ItemsService'];
 function ItemsController(UsersService, ItemsService) {
   const vm = this;
   vm.items = [];
-  vm.users = [];
   vm.cookie = [];
   activate();
 
@@ -139,8 +138,9 @@ function ItemsController(UsersService, ItemsService) {
 
   function loadAllItems() {
     ItemsService.loadAll().then(function resolve(response) {
+      console.log("Here is the response from load all items: " + response);
       vm.items = response.data.items;
-      console.log(response);
+      console.log(response.data.items);
     });
   };
 
@@ -150,13 +150,6 @@ function ItemsController(UsersService, ItemsService) {
       console.log(response.data.cookie);
     });
   }
-
-  function loadAllUsers() {
-    UsersService.loadAll().then(function resolve(response) {
-      vm.users = response.data.users;
-      console.log(response);
-    });
-  };
 };
 
 module.exports = ItemsController;
@@ -38418,13 +38411,13 @@ module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='sig
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"Name\" ng-model=\"$ctrl.newItem.name\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
+module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{ $ctrl.cookie}}\n    <div ng-repeat=\"items in $ctrl.items\">\n    <a ui-sref='itemsShow({ userId: users._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{ $ctrl.cookie}}\n    <div ng-repeat=\"item in $ctrl.items\">\n    <a ui-sref='itemsShow({ userId: users._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
 
 /***/ }),
 /* 17 */

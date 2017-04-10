@@ -3,7 +3,6 @@ ItemsController.$inject = ['UsersService','ItemsService'];
 function ItemsController(UsersService,ItemsService) {
   const vm = this;
   vm.items = [];
-  vm.users = [];
   vm.cookie = [];
   activate();
 
@@ -17,8 +16,9 @@ function ItemsController(UsersService,ItemsService) {
     ItemsService
     .loadAll()
     .then(function resolve(response){
+      console.log("Here is the response from load all items: " + response);
       vm.items = response.data.items;
-      console.log(response)
+      console.log(response.data.items);
     });
   };
 
@@ -31,14 +31,6 @@ function ItemsController(UsersService,ItemsService) {
     })
   }
 
-  function loadAllUsers() {
-    UsersService
-    .loadAll()
-    .then(function resolve(response){
-      vm.users = response.data.users;
-      console.log(response)
-    });
-  };
 };
 
 module.exports = ItemsController;
