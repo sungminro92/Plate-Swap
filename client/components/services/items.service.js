@@ -10,6 +10,7 @@ function ItemsService($http) {
   self.loadAll = loadAll;
   self.addToItemCollection = addItem;
   self.addItem = addItem;
+  self.loadItem = loadItem;
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -18,6 +19,11 @@ function ItemsService($http) {
       .get('/api/items');
   };
 
+  function loadItem(id){
+    console.log(id);
+    return $http
+    .get('/api/items/' + id);
+  };
 
 
   // Tells server to add new item to database

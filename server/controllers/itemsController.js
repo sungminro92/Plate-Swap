@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
 const Item = require('../models/Item');
 const User = require('../models/User');
 
 // NEED TO CHECK AND MAKE SURE THIS IS PROPERLY GRABBING INFO
 // [GET] Index all items by all users (gallery)
-router.get('/', function showIndivItem(req, res){
+router.get('/', function showAllItems(req, res){
   Item
   .find({})
   .exec(function(err, items) {
@@ -16,7 +17,17 @@ router.get('/', function showIndivItem(req, res){
   })
 });
 
-//router.s
+router.get('/:id', function showIndivItem(req, res){
+  var id = req.params.id;
+  Item
+  .findById({_id: id})
+  .exec(function(err, item) {
+    if(err) {console.log(err)}
+      res.json({
+        item: item
+      });
+  })
+});
 
 
 // [POST] Create new item

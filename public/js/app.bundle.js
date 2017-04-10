@@ -122,10 +122,26 @@ module.exports = ItemsNewController;
 /* 2 */
 /***/ (function(module, exports) {
 
-ItemsShowController.$inject = ['ItemsService'];
+ItemsShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService'];
 
-function ItemsShowController() {
+function ItemsShowController($stateParams, ItemsService, UsersService) {
   var vm = this;
+  vm.current = {};
+
+  activate();
+
+  function activate() {
+    loadCurrentItem();
+  }
+
+  function loadCurrentItem() {
+    console.log($stateParams);
+
+    ItemsService.loadItem($stateParams.itemId).then(function showItem(response) {
+      vm.current = response.data.item;
+      console.log('this is where the response is: ' + response);
+    });
+  }
 };
 
 module.exports = ItemsShowController;
@@ -304,11 +320,17 @@ function ItemsService($http) {
   self.loadAll = loadAll;
   self.addToItemCollection = addItem;
   self.addItem = addItem;
+  self.loadItem = loadItem;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
     console.log('load all function fired from service');
     return $http.get('/api/items');
+  };
+
+  function loadItem(id) {
+    console.log(id);
+    return $http.get('/api/items/' + id);
   };
 
   // Tells server to add new item to database
@@ -38443,13 +38465,13 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = "";
+module.exports = "\n<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n      <img src=\"{{$ctrl.current.imgUrl}}\">\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{ $ctrl.cookie}}s\n    <div ng-repeat=\"item in $ctrl.items\">\n    <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{ $ctrl.cookie}}\n    <div ng-repeat=\"item in $ctrl.items\">\n    <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
 
 /***/ }),
 /* 20 */
