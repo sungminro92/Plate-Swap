@@ -1,2 +1,10 @@
-<h1> this is your profile </h1>
-
+<div>
+  <h1> this is your profile </h1>
+  <a ui-sref="items">Back to view all items</a>
+  </br>
+  <a ui-sref="itemsNew">Create new item</a>
+  <div class="UserItems" ng-repeat="item in $ctrl.items">
+    <p>Title: {{item.title}}</p>
+    <p>Description: {{item.description}}</p>
+</div>
+</div>

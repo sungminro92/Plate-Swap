@@ -14,6 +14,7 @@ router.get('/cookie', function(req,res){
 });
 
 
+
 // [POST] Create new user
 router.post('/', authHelpers.createSecure, function(req, res){
   console.log('body:', req.body);

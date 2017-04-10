@@ -11,10 +11,22 @@ router.get('/', function showAllItems(req, res){
   .find({})
   .exec(function(err, items) {
     if(err) {console.log(err)}
-    res.json({
+     res.json({
       items: items
     });
   })
+});
+
+// USER PROFILE & SHOWING THIS USER'S ITEMS FILTERED by items.userId
+router.get('/filter/:userId', function showThisUserItems(req, res) {
+  Item
+  .find({ userId: req.params.userId})
+  .exec(function(err, items) {
+    if(err) {console.log(err)}
+      res.json({
+        items: items
+      });
+    })
 });
 
 router.get('/:id', function showIndivItem(req, res){
@@ -28,6 +40,7 @@ router.get('/:id', function showIndivItem(req, res){
       });
   })
 });
+
 
 
 // [POST] Create new item

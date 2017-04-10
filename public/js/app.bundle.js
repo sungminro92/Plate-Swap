@@ -212,7 +212,21 @@ UserShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService'];
 function UserShowController($stateParams, ItemsService, UsersService) {
   var vm = this;
   vm.currentUser = {};
-};
+  vm.items = [];
+
+  activate();
+
+  function activate() {
+    loadThisUserItems();
+  }
+
+  function loadThisUserItems() {
+    ItemsService.loadThisUserItems($stateParams.userId).then(function showItems(response) {
+      vm.items = response.data.items;
+      console.log(response.data.items);
+    });
+  };
+}
 
 module.exports = UserShowController;
 
@@ -337,6 +351,7 @@ function ItemsService($http) {
   self.addToItemCollection = addItem;
   self.addItem = addItem;
   self.loadItem = loadItem;
+  self.loadThisUserItems = loadThisUserItems;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -352,6 +367,10 @@ function ItemsService($http) {
   // Tells server to add new item to database
   function addItem(newItem) {
     return $http.post('/api/items', newItem);
+  };
+
+  function loadThisUserItems(userId) {
+    return $http.get('/api/items/filter/' + userId);
   };
 };
 
@@ -377,9 +396,14 @@ function UsersService($http) {
     return $http.get('/api/items');
   };
 
+  function loadUser(id) {
+    console.log(id);
+    return $http.get('/api/users/' + id);
+  };
+
   function getCookie(user) {
     return $http.get('/api/users/cookie');
-  }
+  };
 
   function login(user) {
     return $http.post('/api/users/login', user);
@@ -38489,13 +38513,13 @@ module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='sig
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
+module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n   <!--  <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\"> -->\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.title }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n<!--   Price: {{ $ctrl.newItem.price }} -->\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n      <img src=\"{{$ctrl.current.imgUrl}}\">\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n  </div>\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 21 */
@@ -38513,7 +38537,7 @@ module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='sig
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<h1> this is your profile </h1>\n\n";
+module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\">Back to view all items</a>\n  </br>\n  <a ui-sref=\"itemsNew\">Create new item</a>\n  <div class=\"UserItems\" ng-repeat=\"item in $ctrl.items\">\n    <p>Title: {{item.title}}</p>\n    <p>Description: {{item.description}}</p>\n</div>\n</div>\n";
 
 /***/ }),
 /* 24 */

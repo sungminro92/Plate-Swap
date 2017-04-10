@@ -11,6 +11,8 @@ function ItemsService($http) {
   self.addToItemCollection = addItem;
   self.addItem = addItem;
   self.loadItem = loadItem;
+  self.loadThisUserItems = loadThisUserItems;
+
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -25,10 +27,16 @@ function ItemsService($http) {
     .get('/api/items/' + id);
   };
 
-
   // Tells server to add new item to database
   function addItem(newItem) {
     return $http
-      .post('/api/items', newItem);
+    .post('/api/items', newItem);
   };
+
+  function loadThisUserItems(userId) {
+    return $http
+    .get('/api/items/filter/' + userId)
+  };
+
 };
+

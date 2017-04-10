@@ -19,10 +19,16 @@ function UsersService($http) {
       .get('/api/items');
   };
 
+  function loadUser(id){
+    console.log(id);
+    return $http
+    .get('/api/users/' + id);
+  };
+
   function getCookie(user) {
     return $http
     .get('/api/users/cookie');
-  }
+  };
 
   function login(user) {
     return $http

@@ -21,7 +21,7 @@ var ItemSchema = new Schema({ // item Schema
 	description: String,
 	city: String,
 	state: String,
-	imgUrl: String,
+	image: String,
 	created_at: Date,
 	updated_at: Date,
 	used: Boolean,
