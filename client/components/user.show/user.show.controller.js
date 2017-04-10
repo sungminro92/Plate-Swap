@@ -4,6 +4,8 @@ function UserShowController($stateParams, ItemsService, UsersService){
  var vm = this;
  vm.currentUser = {};
  vm.items = [];
+ vm.updateItem = updateItem;
+ vm.isEditing = false;
 
  activate()
 
@@ -19,6 +21,17 @@ function UserShowController($stateParams, ItemsService, UsersService){
     console.log(response.data.items);
   })
   };
+
+  function updateItem(item) {
+    console.log('update item fn fired');
+    ItemsService
+    .updateItem(item)
+    .then (function () {
+      item.isEditing = false;
+      console.log(vm.isEditing);
+    })
+  }
+
 }
 
 module.exports = UserShowController;

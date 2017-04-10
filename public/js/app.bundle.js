@@ -212,6 +212,8 @@ function UserShowController($stateParams, ItemsService, UsersService) {
   var vm = this;
   vm.currentUser = {};
   vm.items = [];
+  vm.updateItem = updateItem;
+  vm.isEditing = false;
 
   activate();
 
@@ -225,6 +227,14 @@ function UserShowController($stateParams, ItemsService, UsersService) {
       console.log(response.data.items);
     });
   };
+
+  function updateItem(item) {
+    console.log('update item fn fired');
+    ItemsService.updateItem(item).then(function () {
+      item.isEditing = false;
+      console.log(vm.isEditing);
+    });
+  }
 }
 
 module.exports = UserShowController;
@@ -351,6 +361,7 @@ function ItemsService($http) {
   self.addItem = addItem;
   self.loadItem = loadItem;
   self.loadThisUserItems = loadThisUserItems;
+  self.updateItem = updateItem;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -366,6 +377,11 @@ function ItemsService($http) {
   // Tells server to add new item to database
   function addItem(newItem) {
     return $http.post('/api/items', newItem);
+  };
+
+  // Tells server to update info for specific item
+  function updateItem(item) {
+    return $http.patch('/api/items/' + item._id, item);
   };
 
   function loadThisUserItems(userId) {
@@ -38536,7 +38552,7 @@ module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='sig
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\">Back to view all items</a>\n  </br>\n  <a ui-sref=\"itemsNew\">Create new item</a>\n  <div class=\"UserItems\" ng-repeat=\"item in $ctrl.items\">\n    <p>Title: {{item.title}}</p>\n    <p>Description: {{item.description}}</p>\n</div>\n</div>\n";
+module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\"> << Back to view all items</a>\n  </br>\n  <div>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n  </div>\n  <div class=\"user-items col-md-4\" ng-repeat=\"item in $ctrl.items\">\n    <li><strong>{{item.title}}</strong></li>\n    <li>Description: {{item.description}}</li>\n    <li>Location: {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n";
 
 /***/ }),
 /* 24 */

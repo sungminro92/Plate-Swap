@@ -10,3 +10,16 @@
   margin: 10px;
   text-align: center;
 }
+
+
+/*Specfic user items index*/
+
+.user-items {
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid green;
+}
+
+.user-items li {
+  list-style-type: none;
+}

@@ -12,6 +12,7 @@ function ItemsService($http) {
   self.addItem = addItem;
   self.loadItem = loadItem;
   self.loadThisUserItems = loadThisUserItems;
+  self.updateItem = updateItem;
 
 
 // Asks server for list of ALL items (regardless of creator)
@@ -32,6 +33,14 @@ function ItemsService($http) {
     return $http
     .post('/api/items', newItem);
   };
+
+
+  // Tells server to update info for specific item
+  function updateItem(item) {
+    return $http
+    .patch('/api/items/' + item._id, item);
+  };
+
 
   function loadThisUserItems(userId) {
     return $http

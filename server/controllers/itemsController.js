@@ -42,7 +42,6 @@ router.get('/:id', function showIndivItem(req, res){
 });
 
 
-
 // [POST] Create new item
 router.post('/', function createNewPost(req, res){
   console.log('body:', req.body);
@@ -61,6 +60,27 @@ router.post('/', function createNewPost(req, res){
     }
     res.json({
       item: item
+    });
+  });
+});
+
+
+
+router.patch('/:id', function updateAction(req, res) {
+  var id = req.params.id;
+
+  Item
+  .findById({_id: id}, function(error, item) {
+    if(error) res.json({message: 'Could not find item b/c:' + error});
+    if(req.body.title) item.title = req.body.title;
+    if(req.body.description) item.description = req.body.description;
+    if(req.body.city) item.city = req.body.city;
+    if(req.body.state) item.state = req.body.state;
+
+    item.save(function(error) {
+      console.log(error)
+      if(error) res.json({messsage: 'Could not update item b/c:' + error});
+      res.json({message: 'Item successfully updated', item: item});
     });
   });
 });
