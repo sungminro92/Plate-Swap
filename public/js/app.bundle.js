@@ -38330,7 +38330,7 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <div ng-repeat=\"users in $ctrl.users\">\n      <div ng-repeat=\"item in users.items\">\n        <a ui-sref='itemsShow({ itemId: users._id})'>\n          <span class='posting-title'>{{item.title}}</a><br></span>\n          <span class='posting-description'>{{item.description}}</span>\n          <br><br>\n      </div>\n    </div>\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <div ng-repeat=\"users in $ctrl.users\">\n      <div ng-repeat=\"item in users.items\" class=\"posting-card col-md-4\">\n        <a ui-sref='itemsShow({ itemId: users._id})'>\n          <span class='posting-title'>{{item.title}}</a><br></span>\n          <span class='posting-description'>{{item.description}}</span>\n          <br><br>\n      </div>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 14 */
