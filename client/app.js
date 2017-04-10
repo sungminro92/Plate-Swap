@@ -28,6 +28,10 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   .state('itemsNew', {
     template: '<items-new></items-new>',
     url: '/items/new'
+  })
+  .state('itemsShow', {
+    template: '<items-show></items-show>',
+    url: '/items/:itemId'
   });
   $urlRouterProvider.otherwise('/');
 };

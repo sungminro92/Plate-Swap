@@ -20,11 +20,13 @@ Comment.remove({}, function(err){
 });
 
 var user1 = new User({
-	name: 'Alpha',
-	email: 'alpha@gmail.com',
+	firstName: 'Alpha',
+  lastName: 'Lastname',
+	email: 'alpha@gmail.com'
 });
 var user2 = new User({
-	name: 'Beta',
+	firstName: 'Beta',
+  lastName: 'Lastname',
 	email: 'beta@gmail.com',
   items: {
     title: 'Another item',
@@ -35,7 +37,8 @@ var user2 = new User({
   }
 });
 var user3 = new User({
-	name: 'Gamma',
+	firstName: 'Gamma',
+  lastName: 'Lastname',
 	email: 'gamma@gmail.com',
   items: {
     title: 'Awesome item',

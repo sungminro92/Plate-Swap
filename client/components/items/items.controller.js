@@ -2,7 +2,7 @@ ItemsController.$inject = ['UsersService'];
 function ItemsController(UsersService) {
   const vm = this;
 
-  vm.items = [];
+  vm.users = [];
 
   activate();
 
@@ -15,7 +15,8 @@ function ItemsController(UsersService) {
     UsersService
     .loadAll()
     .then(function resolve(response){
-      vm.items = response.data.items;
+      vm.users = response.data.users;
+      console.log(response)
     });
   };
 };

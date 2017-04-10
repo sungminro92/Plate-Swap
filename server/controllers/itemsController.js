@@ -7,11 +7,11 @@ const User = require('../models/User');
 // [GET] Index all items by all users (gallery)
 router.get('/', function showIndivItem(req, res){
   User
-  .distinct('items')
-  .exec(function(err, items) {
+  .find({})
+  .exec(function(err, users) {
     if(err) {console.log(err)}
     res.json({
-      items: items
+      users: users
     });
   })
 });

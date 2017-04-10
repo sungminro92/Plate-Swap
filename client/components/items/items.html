@@ -1,11 +1,11 @@
 <div class='items'>
   <h1>Items</h1>
-  <p>Hello from the Items component.</p>
-  <ul>
-    <li ng-repeat="items in $ctrl.items">
-      Name: {{ items.title }}
-      <br>
-      Full Object: {{ items }}
-    </li>
-  </ul>
+    <div ng-repeat="users in $ctrl.users">
+      <div ng-repeat="item in users.items">
+        <a ui-sref='itemsShow({ itemId: users._id})'>
+          <span class='posting-title'>{{item.title}}</a><br></span>
+          <span class='posting-description'>{{item.description}}</span>
+          <br><br>
+      </div>
+    </div>
 </div>
