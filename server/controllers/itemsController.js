@@ -16,6 +16,8 @@ router.get('/', function showIndivItem(req, res){
   })
 });
 
+//router.s
+
 
 // [POST] Create new item
 router.post('/', function createNewPost(req, res){

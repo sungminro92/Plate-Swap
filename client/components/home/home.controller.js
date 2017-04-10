@@ -6,10 +6,11 @@ function HomeController(UsersService) {
   vm.newUser = {};
 
 // Tells service to add new user to database upon signup
-  function addUser(newUser) {
-    console.log(newUser);
+  function addUser() {
+    console.log(vm.newUser);
     UsersService
-    .addToUserCollection(newUser)
+    .addToUserCollection(vm.newUser);
+    
   };
 };
 

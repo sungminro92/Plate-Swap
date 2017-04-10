@@ -10,5 +10,3 @@ const component = {
 angular
 .module('projectThree')
 .component('home', component);
-
-

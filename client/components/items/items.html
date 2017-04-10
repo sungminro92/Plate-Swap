@@ -1,11 +1,12 @@
 <div class='items'>
   <h1>Items</h1>
-    <div ng-repeat="users in $ctrl.users">
-      <div ng-repeat="item in users.items" class="posting-card col-md-4">
-        <a ui-sref='itemsShow({ itemId: users._id})'>
-          <span class='posting-title'>{{item.title}}</a><br></span>
-          <span class='posting-description'>{{item.description}}</span>
-          <br><br>
-      </div>
+    <div ng-repeat="items in $ctrl.items">
+    <a ui-sref='itemsShow({ itemId: users._id})'>
+      <span class='posting-title'>{{item.title}}</span>
+    </a>
+    <br>
+	<span class='posting-description'>{{item.user.name}}</span>
+	<span class='posting-description'>{{item.description}}</span>
+	<br><br>
     </div>
 </div>

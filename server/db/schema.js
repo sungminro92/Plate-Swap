@@ -35,8 +35,7 @@ ItemSchema.pre('save', function(next) {
 });
 
 var UserSchema = new Schema({
-	firstName: String,
-	lastName: String,
+	name: String,
 	email: String,
 	password: String,
 	token: Number,

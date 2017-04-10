@@ -3,9 +3,8 @@
 <!-- Sign up form -->
   <div class='signup'>
     <h2>Sign Up</h2>
-    <form ng-submit='$ctrl.addUser($ctrl.newUser)'>
-      <input class='form-control' type='text' placeholder='First Name' ng-model='$ctrl.newUser.firstName'>
-      <input class='form-control' type='text' placeholder='Last Name' ng-model='$ctrl.newUser.lastName'>
+    <form ng-submit='$ctrl.addUser()'>
+      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>
       <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>
       <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>
       <input type='submit' value='Sign Up'>

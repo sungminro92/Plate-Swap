@@ -3,8 +3,13 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var session = require('express-session');
 //require('dotenv').config();
-
+app.use(session({
+  secret: "derpderpderpcats",
+  resave: false,
+  saveUninitialized: false
+}));
 // Static assets and middleware
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
@@ -22,5 +27,8 @@ mongoose.connect(mongoURI);
 // Routes
 const itemsController = require('./server/controllers/itemsController');
 const usersController = require('./server/controllers/usersController');
+const sessionController = require('./server/controllers/sessionController');
+
 app.use('/api/items', itemsController);
 app.use('/api/users', usersController);
+app.use('/api/session', sessionController);
