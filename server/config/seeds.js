@@ -26,10 +26,24 @@ var user1 = new User({
 var user2 = new User({
 	name: 'Beta',
 	email: 'beta@gmail.com',
+  items: {
+    title: 'Another item',
+    description: 'Just another item',
+    image: 'http://i.imgur.com/614QqTm.jpg',
+    created_at: Date(),
+    updated_at: Date()
+  }
 });
 var user3 = new User({
 	name: 'Gamma',
 	email: 'gamma@gmail.com',
+  items: {
+    title: 'Awesome item',
+    description: 'This is such an awesome item',
+    image: 'http://i.imgur.com/614QqTm.jpg',
+    created_at: Date(),
+    updated_at: Date()
+  }
 });
 
 var item1 = new Item({

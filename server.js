@@ -16,7 +16,7 @@ app.listen(process.env.PORT || 3000, function() {
 });
 
 // Connect to database via dotenv
-var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/business-trade'
+var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/barrels'
 mongoose.connect(mongoURI);
 
 // Routes

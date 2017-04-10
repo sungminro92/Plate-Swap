@@ -21,9 +21,8 @@ router.get('/', function showIndivItem(req, res){
 router.post('/', function createNewPost(req, res){
   console.log('body:', req.body);
   var item = new Item({
-    name: req.body.name,
+    title: req.body.title,
     description: req.body.description,
-    price: req.body.price,
     image: req.body.image,
     city: req.body.city,
     state: req.body.state,
