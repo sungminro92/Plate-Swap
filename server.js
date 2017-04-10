@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-require('dotenv').config();
+//require('dotenv').config();
 
 // Static assets and middleware
 app.use(express.static(__dirname + '/public'));
@@ -16,7 +16,8 @@ app.listen(process.env.PORT || 3000, function() {
 });
 
 // Connect to database via dotenv
-mongoose.connect(process.env.MONGODB_URI);
+var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/business-trade'
+mongoose.connect(mongoURI);
 
 // Routes
 const itemsController = require('./server/controllers/itemsController');
