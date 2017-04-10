@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 var authHelpers = require('../helpers/auth.js');
+const cookieParser = require('cookie-parser');
+
+router.use(cookieParser());
 
 
 // Retrieve cookie value
@@ -20,12 +23,13 @@ router.post('/', authHelpers.createSecure, function(req, res){
     if(error) {
       res.json({message: 'Could not add new user'});
     }
+     res.cookie('cookieName', user._id);
      res.json({
        user: user
      });
-    //res.redirect('/items');
   });
 });
+
 
 router.post("/login", authHelpers.loginUser, function(req, res) {
   console.log("logged in");
