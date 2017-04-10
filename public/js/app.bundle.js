@@ -38540,7 +38540,7 @@ module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a u
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n\n    <div ng-repeat=\"item in $ctrl.items\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>{{item.user.name}}</span>\n\t   <span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    <br><br>\n    <div ng-repeat=\"item in $ctrl.items\" class=\"item-card col-md-4\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>{{item.user.name}}</span>\n\t   <span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
 
 /***/ }),
 /* 22 */

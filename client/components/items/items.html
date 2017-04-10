@@ -2,8 +2,8 @@
   <h1>Items</h1>
     <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>
     <a ui-sref="itemsNew"><button>Create New Offer</button></a>
-
-    <div ng-repeat="item in $ctrl.items">
+    <br><br>
+    <div ng-repeat="item in $ctrl.items" class="item-card col-md-4">
       <a ui-sref='itemsShow({ itemId: item._id})'>
       <span class='posting-title'>{{item.title}}</span>
       </a>
