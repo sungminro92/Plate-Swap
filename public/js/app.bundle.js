@@ -90,18 +90,30 @@ module.exports = HomeController;
 /* 1 */
 /***/ (function(module, exports) {
 
-ItemsNewController.$inject = ['UsersService'];
+ItemsNewController.$inject = ['UsersService', 'ItemsService'];
 
-function ItemsNewController(UsersService) {
+function ItemsNewController(UsersService, ItemsService) {
   const vm = this;
   vm.addItem = addItem;
   vm.newItem = {};
+  vm.cookie = [];
+  activate();
+
+  function activate() {
+    getCookie();
+  }
 
   // HOW IT DOES STUFF
   function addItem(newItem) {
     console.log(newItem);
-    UsersService.addItem(newItem);
+    ItemsService.addItem(newItem);
   };
+
+  function getCookie() {
+    UsersService.getCookie().then(function display(response) {
+      vm.newItem.userId = response.data.cookie;
+    });
+  }
 };
 
 module.exports = ItemsNewController;
@@ -38412,7 +38424,7 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n    {{$ctrl.cookie}}\n    <div ng-repeat=\"items in $ctrl.items\">\n    <a ui-sref='itemsShow({ itemId: users._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{ $ctrl.cookie}}\n    <div ng-repeat=\"items in $ctrl.items\">\n    <a ui-sref='itemsShow({ userId: users._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
 
 /***/ }),
 /* 17 */

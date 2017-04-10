@@ -18,11 +18,14 @@ CommentSchema.pre('save', function(next) {
 var ItemSchema = new Schema({ // item Schema
 	title: String,
 	description: String,
+	city: String,
+	state: String,
 	image: String,
 	created_at: Date,
 	updated_at: Date,
 	used: Boolean,
-	comments: [CommentSchema]
+	comments: [CommentSchema],
+	userId: String
 });
 
 ItemSchema.pre('save', function(next) {
