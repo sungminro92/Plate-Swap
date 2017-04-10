@@ -4,10 +4,7 @@ const User = require('../models/User');
 var authHelpers = require('../helpers/auth.js');
 
 
-router.post("/login", authHelpers.loginUser, function(req, res) {
-  console.log("logged in");
-  //res.redirect('/items');
-});
+
 
 
 // [POST] Create new user
@@ -26,5 +23,8 @@ router.post('/', authHelpers.createSecure, function(req, res){
   });
 });
 
+router.post("/login", authHelpers.loginUser, function(req, res) {
+  console.log("logged in");
+});
 
 module.exports = router;

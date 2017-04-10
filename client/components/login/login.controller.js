@@ -1,6 +1,6 @@
-LoginController.$inject = ['UsersService'];
+LoginController.$inject = ['$state','UsersService'];
 
-function LoginController(UsersService) {
+function LoginController($state, UsersService) {
   const vm = this;
   vm.login = login;
   vm.user = {};
@@ -9,8 +9,10 @@ function LoginController(UsersService) {
   function login() {
     console.log(vm.user);
     UsersService
-    .login(vm.user);
+    .login(vm.user)
+    $state.go('items', {users: users, items: users.items});
   };
+
 };
 
 module.exports = LoginController;

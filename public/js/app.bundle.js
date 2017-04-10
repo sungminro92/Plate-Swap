@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -78,9 +78,9 @@ function HomeController(UsersService) {
   vm.newUser = {};
 
   // Tells service to add new user to database upon signup
-  function addUser(newUser) {
-    console.log(newUser);
-    UsersService.addToUserCollection(newUser);
+  function addUser() {
+    console.log(vm.newUser);
+    UsersService.addToUserCollection(vm.newUser);
   };
 };
 
@@ -110,12 +110,12 @@ module.exports = ItemsNewController;
 /* 2 */
 /***/ (function(module, exports) {
 
-ItemsController.$inject = ['UsersService'];
-function ItemsController(UsersService) {
+ItemsController.$inject = ['UsersService', 'ItemsService'];
+
+function ItemsController(UsersService, ItemsService) {
   const vm = this;
-
+  vm.items = [];
   vm.users = [];
-
   activate();
 
   function activate() {
@@ -124,6 +124,13 @@ function ItemsController(UsersService) {
   }
 
   function loadAllItems() {
+    ItemsService.loadAll().then(function resolve(response) {
+      vm.items = response.data.items;
+      console.log(response);
+    });
+  };
+
+  function loadAllUsers() {
     UsersService.loadAll().then(function resolve(response) {
       vm.users = response.data.users;
       console.log(response);
@@ -135,10 +142,31 @@ module.exports = ItemsController;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+LoginController.$inject = ['$state', 'UsersService'];
+
+function LoginController($state, UsersService) {
+  const vm = this;
+  vm.login = login;
+  vm.user = {};
+
+  // Tells service to add new user to database upon signup
+  function login() {
+    console.log(vm.user);
+    UsersService.login(vm.user);
+    $state.go('items', { users: users, items: users.items });
+  };
+};
+
+module.exports = LoginController;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(10);
-__webpack_require__(8);
+const angular = __webpack_require__(13);
+__webpack_require__(11);
 
 angular.module('projectThree', ['ui.router']).config(routerSetup);
 
@@ -167,11 +195,11 @@ function routerSetup($stateProvider, $urlRouterProvider) {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(11);
+const template = __webpack_require__(14);
 
 const component = {
   controller: controller,
@@ -181,11 +209,11 @@ const component = {
 angular.module('projectThree').component('home', component);
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(1);
-const template = __webpack_require__(12);
+const template = __webpack_require__(15);
 
 const ItemsNewComponent = {
   template: template,
@@ -195,11 +223,11 @@ const ItemsNewComponent = {
 angular.module('projectThree').component('itemsNew', ItemsNewComponent);
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(2);
-const template = __webpack_require__(13);
+const template = __webpack_require__(16);
 
 const component = {
   controller: controller,
@@ -209,7 +237,48 @@ const component = {
 angular.module('projectThree').component('items', component);
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(3);
+const template = __webpack_require__(17);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('projectThree').component('login', component);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+angular.module('projectThree').service('ItemsService', ItemsService);
+
+ItemsService.$inject = ['$http'];
+
+function ItemsService($http) {
+  const self = this;
+
+  self.loadAll = loadAll;
+  self.addToItemCollection = addToItemCollection;
+  self.addItem = addItem;
+
+  // Asks server for list of ALL items (regardless of creator)
+  function loadAll() {
+    console.log('load all function fired from service');
+    return $http.get('/api/items');
+  };
+
+  // Tells server to add new item to database
+  function addItem(newItem) {
+    return $http.post('/api/items', newItem);
+  };
+};
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 angular.module('projectThree').service('UsersService', UsersService);
@@ -221,7 +290,7 @@ function UsersService($http) {
 
   self.loadAll = loadAll;
   self.addToUserCollection = addToUserCollection;
-  self.addItem = addItem;
+  self.login = login;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -229,19 +298,18 @@ function UsersService($http) {
     return $http.get('/api/items');
   };
 
+  function login(user) {
+    return $http.post('/api/users/login', user);
+  };
+
   // Tells server to add new user to database
   function addToUserCollection(newUser) {
     return $http.post('/api/users', newUser);
   };
-
-  // Tells server to add new item to database
-  function addItem(newItem) {
-    return $http.post('/api/items', newItem);
-  };
 };
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /**
@@ -4930,7 +4998,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /**
@@ -38307,43 +38375,52 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
+__webpack_require__(12);
 module.exports = angular;
 
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser($ctrl.newUser)'>\n      <input class='form-control' type='text' placeholder='First Name' ng-model='$ctrl.newUser.firstName'>\n      <input class='form-control' type='text' placeholder='Last Name' ng-model='$ctrl.newUser.lastName'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser()'>\n      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"Name\" ng-model=\"$ctrl.newItem.name\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <div ng-repeat=\"users in $ctrl.users\">\n      <div ng-repeat=\"item in users.items\" class=\"posting-card col-md-4\">\n        <a ui-sref='itemsShow({ itemId: users._id})'>\n          <span class='posting-title'>{{item.title}}</a><br></span>\n          <span class='posting-description'>{{item.description}}</span>\n          <br><br>\n      </div>\n    </div>\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <div ng-repeat=\"items in $ctrl.items\">\n    <a ui-sref='itemsShow({ itemId: users._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n    </div>\n</div>\n";
 
 /***/ }),
-/* 14 */
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(3);
 __webpack_require__(4);
-__webpack_require__(0);
 __webpack_require__(5);
-__webpack_require__(1);
+__webpack_require__(0);
 __webpack_require__(6);
+__webpack_require__(1);
+__webpack_require__(7);
 __webpack_require__(2);
-module.exports = __webpack_require__(7);
+__webpack_require__(8);
+__webpack_require__(3);
+__webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 
 /***/ })

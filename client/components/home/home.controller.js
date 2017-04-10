@@ -9,8 +9,7 @@ function HomeController(UsersService) {
   function addUser() {
     console.log(vm.newUser);
     UsersService
-    .addToUserCollection(vm.newUser);
-    
+    .addToUserCollection(vm.newUser);    
   };
 };
 
