@@ -32,6 +32,10 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   .state('itemsShow', {
     template: '<items-show></items-show>',
     url: '/items/:itemId'
+  })
+  .state('userShow', {
+    template: '<user-show></user-show>',
+    url: '/users/:userId'
   });
   $urlRouterProvider.otherwise('/');
 };

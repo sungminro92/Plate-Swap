@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -205,10 +205,23 @@ module.exports = LoginController;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+UserShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService'];
+
+function UserShowController($stateParams, ItemsService, UsersService) {
+  var vm = this;
+  vm.currentUser = {};
+};
+
+module.exports = UserShowController;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(15);
-__webpack_require__(13);
+const angular = __webpack_require__(17);
+__webpack_require__(15);
 
 angular.module('projectThree', ['ui.router']).config(routerSetup);
 
@@ -232,16 +245,19 @@ function routerSetup($stateProvider, $urlRouterProvider) {
   }).state('itemsShow', {
     template: '<items-show></items-show>',
     url: '/items/:itemId'
+  }).state('userShow', {
+    template: '<user-show></user-show>',
+    url: '/users/:userId'
   });
   $urlRouterProvider.otherwise('/');
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(16);
+const template = __webpack_require__(18);
 
 const component = {
   controller: controller,
@@ -251,11 +267,11 @@ const component = {
 angular.module('projectThree').component('home', component);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(1);
-const template = __webpack_require__(17);
+const template = __webpack_require__(19);
 
 const ItemsNewComponent = {
   template: template,
@@ -265,11 +281,11 @@ const ItemsNewComponent = {
 angular.module('projectThree').component('itemsNew', ItemsNewComponent);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(2);
-const template = __webpack_require__(18);
+const template = __webpack_require__(20);
 
 const ItemsShowComponent = {
   template: template,
@@ -279,11 +295,11 @@ const ItemsShowComponent = {
 angular.module('projectThree').component('itemsShow', ItemsShowComponent);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(3);
-const template = __webpack_require__(19);
+const template = __webpack_require__(21);
 
 const component = {
   controller: controller,
@@ -293,11 +309,11 @@ const component = {
 angular.module('projectThree').component('items', component);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(4);
-const template = __webpack_require__(20);
+const template = __webpack_require__(22);
 
 const component = {
   controller: controller,
@@ -307,7 +323,7 @@ const component = {
 angular.module('projectThree').component('login', component);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 angular.module('projectThree').service('ItemsService', ItemsService);
@@ -340,7 +356,7 @@ function ItemsService($http) {
 };
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 angular.module('projectThree').service('UsersService', UsersService);
@@ -376,7 +392,21 @@ function UsersService($http) {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(5);
+const template = __webpack_require__(23);
+
+const UserShowComponent = {
+  template: template,
+  controller: controller
+};
+
+angular.module('projectThree').component('userShow', UserShowComponent);
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports) {
 
 /**
@@ -5065,7 +5095,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /**
@@ -38442,60 +38472,68 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
+__webpack_require__(16);
 module.exports = angular;
 
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser()'>\n      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n      <img src=\"{{$ctrl.current.imgUrl}}\">\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n  </div>\n</div>\n";
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser()'>\n      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{ $ctrl.cookie}}\n    <div ng-repeat=\"item in $ctrl.items\">\n    <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n    </a>\n    <br>\n\t<span class='posting-description'>{{item.user.name}}</span>\n\t<span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n    <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\">\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.name }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n  Price: {{ $ctrl.newItem.price }}\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
+module.exports = "\n<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n      <img src=\"{{$ctrl.current.imgUrl}}\">\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 21 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n  {{$ctrl.cookie}}\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'> Manage my profile\n    </a>\n\n    <div ng-repeat=\"item in $ctrl.items\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>{{item.user.name}}</span>\n\t   <span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = "<h1> this is your profile </h1>\n\n";
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
 __webpack_require__(6);
-__webpack_require__(0);
 __webpack_require__(7);
-__webpack_require__(1);
+__webpack_require__(0);
 __webpack_require__(8);
-__webpack_require__(2);
+__webpack_require__(1);
 __webpack_require__(9);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(10);
-__webpack_require__(4);
+__webpack_require__(3);
 __webpack_require__(11);
-module.exports = __webpack_require__(12);
+__webpack_require__(4);
+__webpack_require__(12);
+__webpack_require__(13);
+__webpack_require__(14);
+module.exports = __webpack_require__(5);
 
 
 /***/ })

@@ -1,13 +1,16 @@
 <div class='items'>
   <h1>Items</h1>
-  {{ $ctrl.cookie}}
-    <div ng-repeat="item in $ctrl.items">
-    <a ui-sref='itemsShow({ itemId: item._id})'>
-      <span class='posting-title'>{{item.title}}</span>
+  {{$ctrl.cookie}}
+    <a ui-sref='userShow({ userId: $ctrl.cookie })'> Manage my profile
     </a>
-    <br>
-	<span class='posting-description'>{{item.user.name}}</span>
-	<span class='posting-description'>{{item.description}}</span>
+
+    <div ng-repeat="item in $ctrl.items">
+      <a ui-sref='itemsShow({ itemId: item._id})'>
+      <span class='posting-title'>{{item.title}}</span>
+      </a>
+      <br>
+	   <span class='posting-description'>{{item.user.name}}</span>
+	   <span class='posting-description'>{{item.description}}</span>
 	<br><br>
 
 
