@@ -11,7 +11,6 @@ function ItemsNewController(UsersService, ItemsService) {
     getCookie();
   }
 
-  // HOW IT DOES STUFF
   function addItem(newItem) {
     console.log(newItem);
     ItemsService
