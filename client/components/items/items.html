@@ -1,8 +1,7 @@
 <div class='items'>
   <h1>Items</h1>
-  {{$ctrl.cookie}}
-    <a ui-sref='userShow({ userId: $ctrl.cookie })'> Manage my profile
-    </a>
+    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>
+    <a ui-sref="itemsNew"><button>Create New Offer</button></a>
 
     <div ng-repeat="item in $ctrl.items">
       <a ui-sref='itemsShow({ itemId: item._id})'>
