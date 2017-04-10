@@ -1,5 +1,6 @@
 <div class='items'>
   <h1>Items</h1>
+    {{$ctrl.cookie}}
     <div ng-repeat="items in $ctrl.items">
     <a ui-sref='itemsShow({ itemId: users._id})'>
       <span class='posting-title'>{{item.title}}</span>
@@ -8,5 +9,8 @@
 	<span class='posting-description'>{{item.user.name}}</span>
 	<span class='posting-description'>{{item.description}}</span>
 	<br><br>
+
+
     </div>
+
 </div>

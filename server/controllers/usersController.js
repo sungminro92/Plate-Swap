@@ -4,7 +4,11 @@ const User = require('../models/User');
 var authHelpers = require('../helpers/auth.js');
 
 
-
+// Retrieve cookie value
+router.get('/cookie', function(req,res){
+  res.json({cookie: req.cookies.cookieName});
+  console.log(req.cookies.cookieName);
+});
 
 
 // [POST] Create new user

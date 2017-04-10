@@ -2,7 +2,7 @@ angular
 .module('projectThree')
 .service('UsersService', UsersService);
 
-UsersService.$inject = ['$http',];
+UsersService.$inject = ['$http'];
 
 function UsersService($http) {
   const self = this;
@@ -10,6 +10,7 @@ function UsersService($http) {
   self.loadAll = loadAll;
   self.addToUserCollection = addToUserCollection;
   self.login = login;
+  self.getCookie = getCookie;
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -17,6 +18,11 @@ function UsersService($http) {
     return $http
       .get('/api/items');
   };
+
+  function getCookie(user) {
+    return $http
+    .get('/api/users/cookie');
+  }
 
   function login(user) {
     return $http

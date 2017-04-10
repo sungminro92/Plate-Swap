@@ -4,12 +4,35 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 //require('dotenv').config();
 app.use(session({
   secret: "derpderpderpcats",
   resave: false,
   saveUninitialized: false
 }));
+
+app.use(cookieParser());
+
+// set a cookie
+app.use(function (req, res, next) {
+  // check if client sent cookie
+  var cookie = req.cookies.cookieName;
+  if (cookie === undefined)
+  {
+    res.cookie('cookieName','1234');
+    console.log('cookie created successfully');
+  }
+  else
+  {
+    // yes, cookie was already present
+    console.log('cookie exists', cookie);
+  }
+  next(); // <-- important!
+});
+
+
 // Static assets and middleware
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());

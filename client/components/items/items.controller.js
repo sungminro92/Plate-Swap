@@ -4,11 +4,13 @@ function ItemsController(UsersService,ItemsService) {
   const vm = this;
   vm.items = [];
   vm.users = [];
+  vm.cookie = [];
   activate();
 
   function activate() {
     console.log('Items controller activated');
     loadAllItems();
+    getCookie();
   }
 
   function loadAllItems() {
@@ -19,6 +21,15 @@ function ItemsController(UsersService,ItemsService) {
       console.log(response)
     });
   };
+
+  function getCookie() {
+    UsersService
+    .getCookie()
+    .then(function display(response) {
+      vm.cookie = response.data.cookie;
+      console.log(response.data.cookie);
+    })
+  }
 
   function loadAllUsers() {
     UsersService
