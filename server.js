@@ -5,8 +5,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var session = require('express-session');
 const cookieParser = require('cookie-parser');
+
+// Enable usage of .env file
 var dotenv = require('dotenv');
-var babelLoader = require('babel-loader');
+dotenv.config();
 
 // Static assets and middleware
 app.use(express.static(__dirname + '/public'));
