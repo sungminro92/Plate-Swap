@@ -27,10 +27,11 @@ function HomeController($state,UsersService) {
     .getCookie()
     .then(function display(response) {
       userId = response.data.cookie;
-      if (response !== null || undefined) {
+      if ( userId !== undefined) {
         hideSignupForm();
         getUserName(userId);
       } else {
+        showSignupForm();
         console.log('no response')
       }
     });
@@ -40,11 +41,14 @@ function HomeController($state,UsersService) {
     vm.cookied = true;
   };
 
+  function showSignupForm(){
+    vm.cooked = false;
+  };
+
   function getUserName(userId) {
     UsersService
     .getUserName(userId)
     .then(function display(response){
-      console.log(response.data.user.name)
         vm.userName = response.data.user.name
     });
   }

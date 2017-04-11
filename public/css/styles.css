@@ -308,11 +308,6 @@ div p {
   width: 70%;
 }
 /* HOME PAGE */
-.signup {
-  font-family: 'Dosis', sans-serif;
-  font-size: 25px;
-  font-weight: bold;
-}
 .signup h2 {
   font-family: 'Palanquin Dark', sans-serif;
   font-size: 50px;
@@ -335,9 +330,12 @@ input.inputForm {
   margin: 5px;
 }
 .signup {
+  font-family: 'Dosis', sans-serif;
+  font-size: 25px;
+  font-weight: bold;
   width: 400px;
   background-color: none;
-  height:450px;
+  height:350px;
   position:relative;
   border:3px solid white;
   text-align: center;
@@ -347,7 +345,7 @@ input.inputForm {
   background-color: transparent;
   color: white;
   border: 3px solid white;
-  width: 100px;
+  width: 200px;
   height: 50px;
   transition: .2s ease;
 }
