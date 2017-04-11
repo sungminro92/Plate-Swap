@@ -1,6 +1,6 @@
-ItemsController.$inject = ['UsersService','ItemsService'];
+ItemsController.$inject = ['$state','UsersService','ItemsService'];
 
-function ItemsController(UsersService,ItemsService) {
+function ItemsController($state, UsersService,ItemsService) {
   const vm = this;
   vm.items = [];
   vm.cookie = [];
@@ -20,7 +20,7 @@ function ItemsController(UsersService,ItemsService) {
       vm.items = response.data.items;
       console.log(response.data.items);
     });
-  };
+  }
 
   function getCookie() {
     UsersService
@@ -30,7 +30,6 @@ function ItemsController(UsersService,ItemsService) {
       console.log(response.data.cookie);
     })
   }
-
 };
 
 module.exports = ItemsController;

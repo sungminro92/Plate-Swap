@@ -10,7 +10,7 @@
     <li>Description: {{item.description}}</li>
     <li>Location: {{item.city}}, {{item.state}}</li>
     <span ng-click="item.isEditing=true"><button>Edit</button></span>
-    <button>Delete</button>
+    <button ng-show="item.isEditing" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>
       <form ng-show="item.isEditing" ng-submit="$ctrl.updateItem(item)">
         <div>
           <label for="new-item-title">Title</label>

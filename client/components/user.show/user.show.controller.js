@@ -3,6 +3,7 @@ UserShowController.$inject = ['$stateParams','ItemsService', 'UsersService'];
 function UserShowController($stateParams, ItemsService, UsersService){
  var vm = this;
  vm.currentUser = {};
+ vm.deleteCurrentItem = deleteCurrentItem;
  vm.items = [];
  vm.updateItem = updateItem;
  vm.isEditing = false;
@@ -29,6 +30,16 @@ function UserShowController($stateParams, ItemsService, UsersService){
     .then (function () {
       item.isEditing = false;
       console.log(vm.isEditing);
+    })
+  }
+
+//This function is to delete the current item
+  function deleteCurrentItem(item) {
+    var index = vm.items.indexOf(item)
+    ItemsService
+    .deleteItem(item)
+    .then(function destroy(response){
+      vm.items.splice(index, 1);
     })
   }
 

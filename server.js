@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var session = require('express-session');
 const cookieParser = require('cookie-parser');
-
+var dotenv = require('dotenv');
+var babelLoader = require('babel-loader');
 
 // Static assets and middleware
 app.use(express.static(__dirname + '/public'));

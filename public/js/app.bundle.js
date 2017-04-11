@@ -149,9 +149,9 @@ module.exports = ItemsShowController;
 /* 3 */
 /***/ (function(module, exports) {
 
-ItemsController.$inject = ['UsersService', 'ItemsService'];
+ItemsController.$inject = ['$state', 'UsersService', 'ItemsService'];
 
-function ItemsController(UsersService, ItemsService) {
+function ItemsController($state, UsersService, ItemsService) {
   const vm = this;
   vm.items = [];
   vm.cookie = [];
@@ -169,7 +169,7 @@ function ItemsController(UsersService, ItemsService) {
       vm.items = response.data.items;
       console.log(response.data.items);
     });
-  };
+  }
 
   function getCookie() {
     UsersService.getCookie().then(function display(response) {
@@ -211,6 +211,7 @@ UserShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService'];
 function UserShowController($stateParams, ItemsService, UsersService) {
   var vm = this;
   vm.currentUser = {};
+  vm.deleteCurrentItem = deleteCurrentItem;
   vm.items = [];
   vm.updateItem = updateItem;
   vm.isEditing = false;
@@ -233,6 +234,14 @@ function UserShowController($stateParams, ItemsService, UsersService) {
     ItemsService.updateItem(item).then(function () {
       item.isEditing = false;
       console.log(vm.isEditing);
+    });
+  }
+
+  //This function is to delete the current item
+  function deleteCurrentItem(item) {
+    var index = vm.items.indexOf(item);
+    ItemsService.deleteItem(item).then(function destroy(response) {
+      vm.items.splice(index, 1);
     });
   }
 }
@@ -362,6 +371,7 @@ function ItemsService($http) {
   self.loadItem = loadItem;
   self.loadThisUserItems = loadThisUserItems;
   self.updateItem = updateItem;
+  self.deleteItem = deleteItem;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -386,6 +396,10 @@ function ItemsService($http) {
 
   function loadThisUserItems(userId) {
     return $http.get('/api/items/filter/' + userId);
+  };
+
+  function deleteItem(item) {
+    return $http.delete('/api/items/' + item._id);
   };
 };
 
@@ -38552,7 +38566,7 @@ module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='sig
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\"> << Back to view all items</a>\n  </br>\n  <div>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n  </div>\n  <div class=\"user-items col-md-4\" ng-repeat=\"item in $ctrl.items\">\n    <li><strong>{{item.title}}</strong></li>\n    <li>Description: {{item.description}}</li>\n    <li>Location: {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n";
+module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\"> << Back to view all items</a>\n  </br>\n  <div>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n  </div>\n  <div class=\"user-items col-md-4\" ng-repeat=\"item in $ctrl.items\">\n    <li><strong>{{item.title}}</strong></li>\n    <li>Description: {{item.description}}</li>\n    <li>Location: {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button ng-show=\"item.isEditing\" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n";
 
 /***/ }),
 /* 24 */

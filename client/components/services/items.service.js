@@ -13,7 +13,7 @@ function ItemsService($http) {
   self.loadItem = loadItem;
   self.loadThisUserItems = loadThisUserItems;
   self.updateItem = updateItem;
-
+  self.deleteItem = deleteItem;
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -45,6 +45,11 @@ function ItemsService($http) {
   function loadThisUserItems(userId) {
     return $http
     .get('/api/items/filter/' + userId)
+  };
+
+  function deleteItem(item){
+    return $http
+    .delete('/api/items/' + item._id);
   };
 
 };

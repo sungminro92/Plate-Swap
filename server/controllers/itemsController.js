@@ -85,5 +85,16 @@ router.patch('/:id', function updateAction(req, res) {
   });
 });
 
+router.delete('/:id', function destroyAction(req, res) {
+  var id = req.params.id;
+
+  Item
+  .remove({_id: id}, function(error) {
+    if(error) response.json({message: 'Could not delete item b/c:' + error});
+
+    res.json({message: 'Item successfully deleted'});
+  }).select('-__v');
+});
+
 
 module.exports = router;
