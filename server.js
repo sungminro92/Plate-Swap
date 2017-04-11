@@ -16,8 +16,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 // Connect to port running the app
-app.listen(process.env.PORT || 3000, function() {
-  console.log('App listening successfully on port');
+const port = process.env.PORT || 3000
+app.listen(port, function() {
+  console.log(`App listening successfully on port: ${port}`);
 });
 
 // Connect to database via dotenv

@@ -1,5 +1,5 @@
 var bcrypt = require('bcrypt-nodejs');
-var User = require('../models/user.js');
+var User = require('../models/User.js');
 
 function createSecure(req, res, next) {
   var password = req.body.password;
@@ -34,7 +34,7 @@ function authorized(req, res, next) {
       //I can customize ---> res.render('error/401.hbs')
       //then ---> res.redirect('users')
       res.json({status: 401, data: "unauthorized!!!!"});
-  } 
+  }
   next();
 }
 
