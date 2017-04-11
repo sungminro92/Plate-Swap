@@ -1,20 +1,25 @@
-<div class='items'>
-  <h1>Items</h1>
-    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>
-    <a ui-sref="itemsNew"><button>Create New Offer</button></a>
-    <br><br>
-    <input type='text' ng-model='searchString' placeholder='Search Items'><br><br>
-    <div ng-repeat="item in $ctrl.items | filter:searchString | orderBy: '-created_at'"" class="item-card col-md-4">
-      <a ui-sref='itemsShow({ itemId: item._id})'>
-      <span class='posting-title'>Title: {{item.title}}</span>
-      </a>
-      <br>
-	   <span class='posting-username'>Posted By: {{item.userName}}</span><br>
-	   <span class='posting-description'>Description: {{item.description}}</span><br>
-    <span class='posting-location'>Location: {{item.city}}, {{item.state}}</span><br>
-    <span class='posting-time'>Posted {{item.created_at| date: 'short'}}</span>
-	<br><br>
-
+<div>
+  <div class='items-header'>
+    <div class='left-section'>
+  <h1>Browse Available Foods</h1>
+    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>
     </div>
-
-</div>
+    <div class='right-section'>
+    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>
+    <a ui-sref="itemsNew"><button>Create New Offer</button></a>
+    </div>
+  </div>
+    <div class='card-area'>
+      <div ng-repeat="item in $ctrl.items | filter:searchString | orderBy: '-created_at'" class="item-card">
+        <div class='card-content'>
+          <a ui-sref='itemsShow({ itemId: item._id})'>
+          <img ng-src={{item.image}} alt="Description" />
+          <div class='posting-title'>{{item.title}}</div></a>
+          <div class='posting-description'>{{item.description}}</div>
+      	   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>
+          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>
+          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>
+        </div>
+      </div>
+    </div>
+<div>
