@@ -127,28 +127,34 @@ function ItemsShowController($stateParams, ItemsService, UsersService, CommentsS
   var vm = this;
   vm.current = {};
   vm.comments = [];
+  vm.newComment = {};
   vm.addItemComment = addItemComment;
   // vm.deleteItemComment = deleteItemComment;
   activate();
 
   function activate() {
     loadCurrentItem();
+    getCookie();
   }
 
   function loadCurrentItem() {
-    console.log($stateParams);
-
     ItemsService.loadItem($stateParams.itemId).then(function showItem(response) {
       vm.current = response.data.item;
       vm.comments = response.data.item.comments;
-      console.log('this is where the response is: ' + response);
     });
   }
 
   function addItemComment(newComment) {
-    CommentsService.addComment(newComment).then(function addNewComment(response) {
+    CommentsService.addComment(newComment, $stateParams).then(function (response) {
+      vm.comments.unshift(response.data.newComment);
+      vm.newComment = {};
+      getCookie();
+    });
+  }
+
+  function getCookie() {
+    UsersService.getCookie().then(function display(response) {
       vm.newComment.userId = response.data.cookie;
-      vm.comments.push(newComment);
     });
   }
 };
@@ -371,7 +377,7 @@ angular.module('projectThree').component('login', component);
 
 angular.module('projectThree').service('CommentsService', CommentsService);
 
-CommentsService.$inject = ['$http'];
+CommentsService.$inject = ['$http', '$stateParams'];
 
 function CommentsService($http) {
   const self = this;
@@ -393,8 +399,9 @@ function CommentsService($http) {
   // };
 
   // Tells server to add new item to database
-  function addComment(newComment) {
-    return $http.post('/api/comments/', newComment);
+  function addComment(newComment, $stateParams) {
+    var itemId = $stateParams.itemId;
+    return $http.post('/api/items/' + itemId + '/comments/', newComment);
   };
 
   // function loadThisUserComments(userId) {
@@ -38601,7 +38608,7 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n\n     <div class='commentBox' ng-repeat='comment in $ctrl.comments'>\n     <p>Comment: {{comment.text}}</p>\n     <p>Posted by {{comment.userId}}</p>\n     <p>Posted: {{comment.created_at}}</p>\n     </div>    \n  </div>\n\t\t<div class='commentForm'>\n\t\t<form ng-submit='$ctrl.addItemComment(newComment)'>\n\t\t\t<input type=\"textarea\" name=\"text\" placeholder='text' ng-model='$ctrl.newComment'>\n\n\t\t<input type=\"submit\" value=\"Post Comment\">\n\n\t\t</form>\n\n\t</div> \n\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat='comment in $ctrl.comments'>\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userId}}</li>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 22 */

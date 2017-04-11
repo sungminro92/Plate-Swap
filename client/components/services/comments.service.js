@@ -2,7 +2,7 @@ angular
 .module('projectThree')
 .service('CommentsService', CommentsService);
 
-CommentsService.$inject = ['$http'];
+CommentsService.$inject = ['$http', '$stateParams'];
 
 function CommentsService($http) {
   const self = this;
@@ -24,9 +24,10 @@ function CommentsService($http) {
   // };
 
   // Tells server to add new item to database
-  function addComment(newComment) {
+  function addComment(newComment, $stateParams) {
+    var itemId = $stateParams.itemId;
     return $http
-    .post('/api/comments/', newComment);
+    .post('/api/items/' + itemId + '/comments/', newComment);
   };
 
   // function loadThisUserComments(userId) {

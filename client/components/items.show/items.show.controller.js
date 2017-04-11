@@ -4,36 +4,42 @@ function ItemsShowController($stateParams, ItemsService, UsersService, CommentsS
  var vm = this;
  vm.current = {};
  vm.comments = [];
+ vm.newComment = {};
  vm.addItemComment = addItemComment;
  // vm.deleteItemComment = deleteItemComment;
-activate();
+ activate();
 
   function activate(){
     loadCurrentItem();
+    getCookie();
   }
 
-
   function loadCurrentItem(){
-    console.log($stateParams);
-
     ItemsService
     .loadItem($stateParams.itemId)
     .then(function showItem(response){
       vm.current = response.data.item;
       vm.comments = response.data.item.comments;
-      console.log('this is where the response is: ' + response);
     })
   }
 
   function addItemComment(newComment){
     CommentsService
-    .addComment(newComment)
-    .then(function addNewComment(response){
-      vm.newComment.userId = response.data.cookie;
-      vm.comments.push(newComment);
+    .addComment(newComment, $stateParams)
+    .then(function (response){
+      vm.comments.unshift(response.data.newComment);
+      vm.newComment = {};
+      getCookie();
     })
   }
 
+  function getCookie() {
+    UsersService
+    .getCookie()
+    .then(function display(response) {
+      vm.newComment.userId = response.data.cookie;
+    })
+  }
 };
 
 module.exports = ItemsShowController;

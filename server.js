@@ -26,7 +26,9 @@ mongoose.connect(mongoURI);
 const itemsController = require('./server/controllers/itemsController');
 const usersController = require('./server/controllers/usersController');
 const sessionController = require('./server/controllers/sessionController');
+const commentsController = require('./server/controllers/commentsController');
 
 app.use('/api/items', itemsController);
 app.use('/api/users', usersController);
 app.use('/api/session', sessionController);
+app.use('/api/items/:id/comments', commentsController);
