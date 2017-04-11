@@ -63,11 +63,31 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+function AboutController() {
+    var vm = this;
+}
+
+module.exports = AboutController;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+function ContactController() {
+    var vm = this;
+}
+
+module.exports = ContactController;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 HomeController.$inject = ['$state', 'UsersService'];
@@ -76,6 +96,13 @@ function HomeController($state, UsersService) {
   const vm = this;
   vm.addUser = addUser;
   vm.newUser = {};
+  activate();
+  vm.cookied = false;
+  vm.userName = {};
+
+  function activate() {
+    getCookie();
+  }
 
   // Tells service to add new user to database upon signup
   function addUser() {
@@ -83,13 +110,36 @@ function HomeController($state, UsersService) {
     UsersService.addToUserCollection(vm.newUser).then(function () {
       $state.go('items');
     });
+  }
+
+  function getCookie() {
+    UsersService.getCookie().then(function display(response) {
+      userId = response.data.cookie;
+      if (response !== null || undefined) {
+        hideSignupForm();
+        getUserName(userId);
+      } else {
+        console.log('no response');
+      }
+    });
   };
+
+  function hideSignupForm() {
+    vm.cookied = true;
+  };
+
+  function getUserName(userId) {
+    UsersService.getUserName(userId).then(function display(response) {
+      console.log(response.data.user.name);
+      vm.userName = response.data.user.name;
+    });
+  }
 };
 
 module.exports = HomeController;
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, exports) {
 
 ItemsNewController.$inject = ['$state', 'UsersService', 'ItemsService'];
@@ -129,7 +179,7 @@ function ItemsNewController($state, UsersService, ItemsService) {
 module.exports = ItemsNewController;
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports) {
 
 ItemsShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService', 'CommentsService'];
@@ -180,7 +230,7 @@ function ItemsShowController($stateParams, ItemsService, UsersService, CommentsS
 module.exports = ItemsShowController;
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports) {
 
 ItemsController.$inject = ['$state', 'UsersService', 'ItemsService'];
@@ -216,7 +266,7 @@ function ItemsController($state, UsersService, ItemsService) {
 module.exports = ItemsController;
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports) {
 
 LoginController.$inject = ['$state', 'UsersService'];
@@ -237,7 +287,7 @@ function LoginController($state, UsersService) {
 module.exports = LoginController;
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports) {
 
 UserShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService'];
@@ -284,7 +334,7 @@ function UserShowController($stateParams, ItemsService, UsersService) {
 module.exports = UserShowController;
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const angular = __webpack_require__(22);
@@ -323,11 +373,11 @@ function routerSetup($stateProvider, $urlRouterProvider) {
 };
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(8);
-const template = __webpack_require__(31);
+const controller = __webpack_require__(0);
+const template = __webpack_require__(23);
 
 const component = {
   controller: controller,
@@ -337,21 +387,11 @@ const component = {
 angular.module('projectThree').component('about', component);
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-function AboutController() {
-    var vm = this;
-}
-
-module.exports = AboutController;
-
-/***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(10);
-const template = __webpack_require__(30);
+const controller = __webpack_require__(1);
+const template = __webpack_require__(24);
 
 const component = {
   controller: controller,
@@ -361,21 +401,11 @@ const component = {
 angular.module('projectThree').component('contact', component);
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-function ContactController() {
-    var vm = this;
-}
-
-module.exports = ContactController;
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(0);
-const template = __webpack_require__(23);
+const controller = __webpack_require__(2);
+const template = __webpack_require__(25);
 
 const component = {
   controller: controller,
@@ -388,8 +418,8 @@ angular.module('projectThree').component('home', component);
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(1);
-const template = __webpack_require__(24);
+const controller = __webpack_require__(3);
+const template = __webpack_require__(26);
 
 const ItemsNewComponent = {
   template: template,
@@ -402,8 +432,8 @@ angular.module('projectThree').component('itemsNew', ItemsNewComponent);
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(2);
-const template = __webpack_require__(25);
+const controller = __webpack_require__(4);
+const template = __webpack_require__(27);
 
 const ItemsShowComponent = {
   template: template,
@@ -416,8 +446,8 @@ angular.module('projectThree').component('itemsShow', ItemsShowComponent);
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(3);
-const template = __webpack_require__(26);
+const controller = __webpack_require__(5);
+const template = __webpack_require__(28);
 
 const component = {
   controller: controller,
@@ -430,8 +460,8 @@ angular.module('projectThree').component('items', component);
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(4);
-const template = __webpack_require__(27);
+const controller = __webpack_require__(6);
+const template = __webpack_require__(29);
 
 const component = {
   controller: controller,
@@ -566,8 +596,8 @@ function UsersService($http) {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(5);
-const template = __webpack_require__(28);
+const controller = __webpack_require__(7);
+const template = __webpack_require__(30);
 
 const UserShowComponent = {
   template: template,
@@ -38654,75 +38684,75 @@ module.exports = angular;
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='homePage'>\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser()'>\n      <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='inputForm' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <br>\n      <input class='submitBtn ghost' type='submit' value='Sign Up'>\n    </form>\n    <p class='login'>Already a member?</p>\n    <a ui-sref='login'>\n      <button class='submitBtn ghost'>Log In</button>\n    </a>\n  </div>\n</div>\n";
+module.exports = "<div class='aboutPage'>\n    <p class='aboutTitle'>About Our Awesome App</p>\n        <div class='aboutContent'>\n        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n        </div>\n</div>\n";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n   <!--  <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\"> -->\n    <input type=\"upload\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.title }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n<!--   Price: {{ $ctrl.newItem.price }} -->\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
+module.exports = "<footer id='footer'>\n  <div class='footer'>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/BxKQE5m.png'>\n    </div>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/62Fj9m0.png'>\n    </div>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/7fN6lye.png'>\n    </div>\n  </div>\n  <div class='footer2'>\n    <div class='name'><p>Erin Martin</p></div>\n    <div class='name'><p>Harry Karambizi</p></div>\n    <div class='name'><p>Sungmin Ro</p></div>\n  <div>\n</footer>\n";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <h3>{{$ctrl.current.title}}</h3>\n      <p>Posted By: {{$ctrl.current.userName}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat=\"comment in $ctrl.comments | orderBy: '-created_at'\">\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n      <li><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class='homePage'>\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-hide=\"$ctrl.cookied\" class='signup-form' ng-submit='$ctrl.addUser()'>\n      <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='inputForm' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <br>\n      <input class='submitBtn ghost' type='submit' value='Sign Up'>\n    </form>\n    <div ng-show=\"$ctrl.cookied\">\n    <p class='login'>Welcome back, {{$ctrl.userName}} !!</p>\n    <a ui-sref='items'>\n      <button class='submitBtn ghost'>Get Started</button>\n    </a>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Browse Available Foods</h1>\n    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    </div>\n  </div>\n    <div class='card-area'>\n      <div ng-repeat=\"item in $ctrl.items | filter:searchString | orderBy: '-created_at'\" class=\"item-card\">\n        <div class='card-content'>\n          <a ui-sref='itemsShow({ itemId: item._id})'>\n          <img ng-src={{item.image}} alt=\"Description\" />\n          <div class='posting-title'>{{item.title}}</div></a>\n          <div class='posting-description'>{{item.description}}</div>\n      \t   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>\n          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>\n          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>\n        </div>\n      </div>\n    </div>\n<div>\n";
+module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n   <!--  <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\"> -->\n    <input type=\"upload\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.title }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n<!--   Price: {{ $ctrl.newItem.price }} -->\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <h3>{{$ctrl.current.title}}</h3>\n      <p>Posted By: {{$ctrl.current.userName}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat=\"comment in $ctrl.comments | orderBy: '-created_at'\">\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n      <li><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Manage your items</h1>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='items'><button>View All Available Items</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    </div>\n  </div>\n  <div class='card-area'>\n  <div class=\"user-items\" ng-repeat=\"item in $ctrl.items\">\n    <img ng-src={{item.image}} alt=\"Description\" />\n    <li class=\"posting-title\"><strong>{{item.title}}</strong></li>\n    <li class=\"posting-description\"><strong>Description:</strong> {{item.description}}</li>\n    <li class=\"posting-location\"><strong>Location:</strong> {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button ng-show=\"item.isEditing\" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n\n<div>\n";
+module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Browse Available Foods</h1>\n    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    </div>\n  </div>\n    <div class='card-area'>\n      <div ng-repeat=\"item in $ctrl.items | filter:searchString | orderBy: '-created_at'\" class=\"item-card\">\n        <div class='card-content'>\n          <a ui-sref='itemsShow({ itemId: item._id})'>\n          <img ng-src={{item.image}} alt=\"Description\" />\n          <div class='posting-title'>{{item.title}}</div></a>\n          <div class='posting-description'>{{item.description}}</div>\n      \t   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>\n          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>\n          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>\n        </div>\n      </div>\n    </div>\n<div>\n";
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-__webpack_require__(6);
-__webpack_require__(7);
-__webpack_require__(8);
-__webpack_require__(9);
-__webpack_require__(10);
-__webpack_require__(11);
-__webpack_require__(0);
-__webpack_require__(12);
-__webpack_require__(1);
-__webpack_require__(13);
-__webpack_require__(2);
-__webpack_require__(14);
-__webpack_require__(3);
-__webpack_require__(15);
-__webpack_require__(4);
-__webpack_require__(16);
-__webpack_require__(17);
-__webpack_require__(18);
-__webpack_require__(19);
-module.exports = __webpack_require__(5);
-
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = "<footer id='footer'>\n  <div class='footer'>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/BxKQE5m.png'>\n    </div>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/62Fj9m0.png'>\n    </div>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/7fN6lye.png'>\n    </div>\n  </div>\n  <div class='footer2'>\n    <div class='name'><p>Erin Martin</p></div>\n    <div class='name'><p>Harry Karambizi</p></div>\n    <div class='name'><p>Sungmin Ro</p></div>\n  <div>\n</footer>\n";
+module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Manage your items</h1>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='items'><button>View All Available Items</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    </div>\n  </div>\n  <div class='card-area'>\n  <div class=\"user-items\" ng-repeat=\"item in $ctrl.items\">\n    <img ng-src={{item.image}} alt=\"Description\" />\n    <li class=\"posting-title\"><strong>{{item.title}}</strong></li>\n    <li class=\"posting-description\"><strong>Description:</strong> {{item.description}}</li>\n    <li class=\"posting-location\"><strong>Location:</strong> {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button ng-show=\"item.isEditing\" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n\n<div>\n";
 
 /***/ }),
 /* 31 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div class='aboutPage'>\n    <p class='aboutTitle'>About Our Awesome App</p>\n        <div class='aboutContent'>\n        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n        </div>\n</div>\n";
+__webpack_require__(8);
+__webpack_require__(9);
+__webpack_require__(0);
+__webpack_require__(10);
+__webpack_require__(1);
+__webpack_require__(11);
+__webpack_require__(2);
+__webpack_require__(12);
+__webpack_require__(3);
+__webpack_require__(13);
+__webpack_require__(4);
+__webpack_require__(14);
+__webpack_require__(5);
+__webpack_require__(15);
+__webpack_require__(6);
+__webpack_require__(16);
+__webpack_require__(17);
+__webpack_require__(18);
+__webpack_require__(19);
+module.exports = __webpack_require__(7);
+
 
 /***/ })
 /******/ ]);

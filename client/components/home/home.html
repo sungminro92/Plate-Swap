@@ -2,16 +2,18 @@
 <!-- Sign up form -->
   <div class='signup'>
     <h2>Sign Up</h2>
-    <form ng-submit='$ctrl.addUser()'>
+    <form ng-hide="$ctrl.cookied" class='signup-form' ng-submit='$ctrl.addUser()'>
       <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>
       <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>
       <input class='inputForm' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>
       <br>
       <input class='submitBtn ghost' type='submit' value='Sign Up'>
     </form>
-    <p class='login'>Already a member?</p>
-    <a ui-sref='login'>
-      <button class='submitBtn ghost'>Log In</button>
+    <div ng-show="$ctrl.cookied">
+    <p class='login'>Welcome back, {{$ctrl.userName}} !!</p>
+    <a ui-sref='items'>
+      <button class='submitBtn ghost'>Get Started</button>
     </a>
+    </div>
   </div>
 </div>
