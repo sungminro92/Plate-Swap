@@ -27,7 +27,8 @@ var ItemSchema = new Schema({ // item Schema
 	updated_at: Date,
 	used: Boolean,
 	comments: [CommentSchema],
-	userId: String
+	userId: String,
+	userName: String
 });
 
 ItemSchema.pre('save', function(next) {

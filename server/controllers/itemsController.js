@@ -52,7 +52,8 @@ router.post('/', function createNewPost(req, res){
     image: req.body.image,
     city: req.body.city,
     state: req.body.state,
-    userId: req.body.userId
+    userId: req.body.userId,
+    userName: req.body.userName
     // creator: req.session.currentUser.id
   });
   item.save(function(error){

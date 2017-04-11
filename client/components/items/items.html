@@ -5,11 +5,11 @@
     <br><br>
     <div ng-repeat="item in $ctrl.items" class="item-card col-md-4">
       <a ui-sref='itemsShow({ itemId: item._id})'>
-      <span class='posting-title'>{{item.title}}</span>
+      <span class='posting-title'>Title: {{item.title}}</span>
       </a>
       <br>
-	   <span class='posting-description'>{{item.user.name}}</span>
-	   <span class='posting-description'>{{item.description}}</span>
+	   <span class='posting-description'>Posted By: {{item.userName}}</span><br>
+	   <span class='posting-description'>Description: {{item.description}}</span>
 	<br><br>
 
 

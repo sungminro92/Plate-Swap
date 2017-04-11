@@ -110,7 +110,14 @@ function ItemsNewController(UsersService, ItemsService) {
 
   function getCookie() {
     UsersService.getCookie().then(function display(response) {
+      getUserName(response.data.cookie);
       vm.newItem.userId = response.data.cookie;
+    });
+  }
+
+  function getUserName(userId) {
+    UsersService.getUserName(userId).then(function display(response) {
+      vm.newItem.userName = response.data.user.name;
     });
   }
 };
@@ -38604,13 +38611,13 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat='comment in $ctrl.comments'>\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <h3>{{$ctrl.current.title}}</h3>\n      <p>Posted By: {{$ctrl.current.userName}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat='comment in $ctrl.comments'>\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    <br><br>\n    <div ng-repeat=\"item in $ctrl.items\" class=\"item-card col-md-4\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>{{item.user.name}}</span>\n\t   <span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    <br><br>\n    <div ng-repeat=\"item in $ctrl.items\" class=\"item-card col-md-4\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>Title: {{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>Posted By: {{item.userName}}</span><br>\n\t   <span class='posting-description'>Description: {{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
 
 /***/ }),
 /* 23 */
