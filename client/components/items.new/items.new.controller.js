@@ -1,10 +1,9 @@
-ItemsNewController.$inject = ['UsersService', 'ItemsService'];
+ItemsNewController.$inject = ['$state', 'UsersService', 'ItemsService'];
 
-function ItemsNewController(UsersService, ItemsService) {
+function ItemsNewController($state, UsersService, ItemsService) {
   const vm = this;
   vm.addItem = addItem;
   vm.newItem = {};
-  vm.cookie = [];
   activate();
 
   function activate() {
@@ -15,6 +14,10 @@ function ItemsNewController(UsersService, ItemsService) {
     console.log(newItem);
     ItemsService
       .addItem(newItem)
+      .then(function(){
+        console.log(vm.newItem.userId);
+        $state.go('userShow', {userId: vm.newItem.userId});
+      });
   };
 
 
@@ -26,6 +29,7 @@ function ItemsNewController(UsersService, ItemsService) {
       vm.newItem.userId = response.data.cookie;
     })
   }
+
 
   function getUserName(userId) {
     UsersService

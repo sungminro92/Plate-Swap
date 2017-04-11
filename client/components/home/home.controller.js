@@ -1,6 +1,6 @@
-HomeController.$inject = ['UsersService'];
+HomeController.$inject = ['$state','UsersService'];
 
-function HomeController(UsersService) {
+function HomeController($state,UsersService) {
   const vm = this;
   vm.addUser = addUser;
   vm.newUser = {};
@@ -9,8 +9,12 @@ function HomeController(UsersService) {
   function addUser() {
     console.log(vm.newUser);
     UsersService
-    .addToUserCollection(vm.newUser);    
+    .addToUserCollection(vm.newUser)
+    .then(function(){
+      $state.go('items');
+    });
   };
 };
+
 
 module.exports = HomeController;
