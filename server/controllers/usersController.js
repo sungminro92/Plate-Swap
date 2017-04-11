@@ -10,7 +10,6 @@ router.use(cookieParser());
 // Retrieve cookie value
 router.get('/cookie', function(req,res){
   res.json({cookie: req.cookies.cookieName});
-  console.log(req.cookies.cookieName);
 });
 
 
@@ -28,6 +27,20 @@ router.post('/', authHelpers.createSecure, function(req, res){
      res.json({
        user: user
      });
+  });
+});
+
+
+// Retrieve name of current user
+router.get('/name/:id', function showIndivItem(req, res){
+  var id = req.params.id;
+  User
+  .findById({_id: id})
+  .exec(function(err, user) {
+    if(err) {console.log(err)}
+      res.json({
+        user: user
+      });
   });
 });
 

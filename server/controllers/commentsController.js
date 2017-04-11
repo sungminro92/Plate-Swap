@@ -13,7 +13,8 @@ router.post('/', function createNewComment(req, res){
         if(err) {console.log(err)}
         var newComment = new Comment({
             text: req.body.text,
-            userId: req.body.userId
+            userId: req.body.userId,
+            userName: req.body.userName
         });
         item.comments.push(newComment);
         item.save();

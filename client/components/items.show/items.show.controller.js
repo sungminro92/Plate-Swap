@@ -37,7 +37,16 @@ function ItemsShowController($stateParams, ItemsService, UsersService, CommentsS
     UsersService
     .getCookie()
     .then(function display(response) {
+      getUserName(response.data.cookie);
       vm.newComment.userId = response.data.cookie;
+    })
+  }
+
+  function getUserName(userId) {
+    UsersService
+    .getUserName(userId)
+    .then(function display(response){
+      vm.newComment.userName = response.data.user.name
     })
   }
 };

@@ -154,7 +154,14 @@ function ItemsShowController($stateParams, ItemsService, UsersService, CommentsS
 
   function getCookie() {
     UsersService.getCookie().then(function display(response) {
+      getUserName(response.data.cookie);
       vm.newComment.userId = response.data.cookie;
+    });
+  }
+
+  function getUserName(userId) {
+    UsersService.getUserName(userId).then(function display(response) {
+      vm.newComment.userName = response.data.user.name;
     });
   }
 };
@@ -383,35 +390,19 @@ function CommentsService($http) {
   const self = this;
 
   self.addComment = addComment;
-  self.deleteComment = deleteComment;
+  // self.deleteComment = deleteComment;
 
-  // Asks server for list of ALL items (regardless of creator)
-  // function loadAllComments() {
-  //   console.log('all comments loaded!');
-  //   return $http
-  //     .get('/api/items/');
-  // };
 
-  // function loadComment(itemId){
-  //   console.log(id);
-  //   return $http
-  //   .get('/api/items/' + id + );
-  // };
-
-  // Tells server to add new item to database
+  // Tells server to add new comment to database
   function addComment(newComment, $stateParams) {
     var itemId = $stateParams.itemId;
     return $http.post('/api/items/' + itemId + '/comments/', newComment);
   };
 
-  // function loadThisUserComments(userId) {
+  // function deleteComment(item){
   //   return $http
-  //   .get('/api/items/filter/' + userId)
+  //   .delete('/api/comments/' + comment._id);
   // };
-
-  function deleteComment(item) {
-    return $http.delete('/api/comments/' + comment._id);
-  };
 };
 
 /***/ }),
@@ -478,6 +469,7 @@ function UsersService($http) {
   self.addToUserCollection = addToUserCollection;
   self.login = login;
   self.getCookie = getCookie;
+  self.getUserName = getUserName;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -492,6 +484,10 @@ function UsersService($http) {
 
   function getCookie(user) {
     return $http.get('/api/users/cookie');
+  };
+
+  function getUserName(id) {
+    return $http.get('/api/users/name/' + id);
   };
 
   function login(user) {
@@ -38608,7 +38604,7 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat='comment in $ctrl.comments'>\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userId}}</li>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat='comment in $ctrl.comments'>\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 22 */

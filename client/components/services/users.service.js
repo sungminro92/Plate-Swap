@@ -11,6 +11,7 @@ function UsersService($http) {
   self.addToUserCollection = addToUserCollection;
   self.login = login;
   self.getCookie = getCookie;
+  self.getUserName = getUserName;
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -28,6 +29,11 @@ function UsersService($http) {
   function getCookie(user) {
     return $http
     .get('/api/users/cookie');
+  };
+
+  function getUserName(id) {
+    return $http
+    .get('/api/users/name/' + id);
   };
 
   function login(user) {

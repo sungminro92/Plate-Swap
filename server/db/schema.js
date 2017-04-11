@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var CommentSchema = new Schema({ // comment Schema
 	text: String,
 	created_at: Date,
-	userId: String
+	userId: String,
+	userName: String
 });
 
 CommentSchema.pre('save', function(next) {
