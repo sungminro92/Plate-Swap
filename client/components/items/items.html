@@ -3,15 +3,17 @@
     <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>
     <a ui-sref="itemsNew"><button>Create New Offer</button></a>
     <br><br>
-    <div ng-repeat="item in $ctrl.items" class="item-card col-md-4">
+    <input type='text' ng-model='searchString' placeholder='Search Items'><br><br>
+    <div ng-repeat="item in $ctrl.items | filter:searchString | orderBy: '-created_at'"" class="item-card col-md-4">
       <a ui-sref='itemsShow({ itemId: item._id})'>
       <span class='posting-title'>Title: {{item.title}}</span>
       </a>
       <br>
-	   <span class='posting-description'>Posted By: {{item.userName}}</span><br>
-	   <span class='posting-description'>Description: {{item.description}}</span>
+	   <span class='posting-username'>Posted By: {{item.userName}}</span><br>
+	   <span class='posting-description'>Description: {{item.description}}</span><br>
+    <span class='posting-location'>Location: {{item.city}}, {{item.state}}</span><br>
+    <span class='posting-time'>Posted {{item.created_at| date: 'short'}}</span>
 	<br><br>
-
 
     </div>
 

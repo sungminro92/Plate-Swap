@@ -15,6 +15,7 @@
     <div class='comment-box' ng-repeat="comment in $ctrl.comments | orderBy: '-created_at'">
       <li><strong>Comment:</strong> {{comment.text}}</li>
       <li><strong>Posted by:</strong> {{comment.userName}}</li>
+      <li><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>
     </div>
   </div>
 </div>
