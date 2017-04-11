@@ -1,14 +1,19 @@
 <div>
-  <h1> this is your profile </h1>
-  <a ui-sref="items"> << Back to view all items</a>
-  </br>
-  <div>
+  <div class='items-header'>
+    <div class='left-section'>
+  <h1>Manage your items</h1>
+    </div>
+    <div class='right-section'>
+    <a ui-sref='items'><button>View All Available Items</button></a>
     <a ui-sref="itemsNew"><button>Create New Offer</button></a>
+    </div>
   </div>
-  <div class="user-items col-md-4" ng-repeat="item in $ctrl.items">
-    <li><strong>{{item.title}}</strong></li>
-    <li>Description: {{item.description}}</li>
-    <li>Location: {{item.city}}, {{item.state}}</li>
+  <div class='card-area'>
+  <div class="user-items" ng-repeat="item in $ctrl.items">
+    <img ng-src={{item.image}} alt="Description" />
+    <li class="posting-title"><strong>{{item.title}}</strong></li>
+    <li class="posting-description"><strong>Description:</strong> {{item.description}}</li>
+    <li class="posting-location"><strong>Location:</strong> {{item.city}}, {{item.state}}</li>
     <span ng-click="item.isEditing=true"><button>Edit</button></span>
     <button ng-show="item.isEditing" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>
       <form ng-show="item.isEditing" ng-submit="$ctrl.updateItem(item)">
@@ -25,3 +30,5 @@
         </div>
 </div>
 </div>
+
+<div>

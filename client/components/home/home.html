@@ -1,20 +1,17 @@
-<div class='home'>
-
+<div class='homePage'>
 <!-- Sign up form -->
   <div class='signup'>
     <h2>Sign Up</h2>
     <form ng-submit='$ctrl.addUser()'>
-      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>
-      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>
-      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>
-      <input type='submit' value='Sign Up'>
+      <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>
+      <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>
+      <input class='inputForm' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>
+      <br>
+      <input class='submitBtn ghost' type='submit' value='Sign Up'>
     </form>
+    <p class='login'>Already a member?</p>
+    <a ui-sref='login'>
+      <button class='submitBtn ghost'>Log In</button>
+    </a>
   </div>
-
-<!-- Log in section -->
-  <div class='login'>
-    <h3>Already a member?</h3>
-    <a ui-sref='login'><button>Log In</button></a>
-  </div>
-
 </div>
