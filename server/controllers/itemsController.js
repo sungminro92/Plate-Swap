@@ -36,7 +36,8 @@ router.get('/:id', function showIndivItem(req, res){
   .exec(function(err, item) {
     if(err) {console.log(err)}
       res.json({
-        item: item
+        item: item,
+        comments: item.comments
       });
   })
 });
@@ -63,7 +64,6 @@ router.post('/', function createNewPost(req, res){
     });
   });
 });
-
 
 
 router.patch('/:id', function updateAction(req, res) {

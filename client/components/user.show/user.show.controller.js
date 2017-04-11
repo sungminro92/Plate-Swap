@@ -6,6 +6,7 @@ function UserShowController($stateParams, ItemsService, UsersService){
  vm.deleteCurrentItem = deleteCurrentItem;
  vm.items = [];
  vm.updateItem = updateItem;
+ vm.newComment = {};
  vm.isEditing = false;
 
  activate()

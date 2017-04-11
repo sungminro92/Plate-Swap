@@ -4,5 +4,21 @@
       <!-- <img src="{{$ctrl.current.image}}"> -->
       <p>{{$ctrl.current.title}}</p>
       <p>{{$ctrl.current.description}}</p>
+
+     <div class='commentBox' ng-repeat='comment in $ctrl.comments'>
+     <p>Comment: {{comment.text}}</p>
+     <p>Posted by {{comment.userId}}</p>
+     <p>Posted: {{comment.created_at}}</p>
+     </div>    
   </div>
+		<div class='commentForm'>
+		<form ng-submit='$ctrl.addItemComment(newComment)'>
+			<input type="textarea" name="text" placeholder='text' ng-model='$ctrl.newComment'>
+
+		<input type="submit" value="Post Comment">
+
+		</form>
+
+	</div> 
+
 </div>

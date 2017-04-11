@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -121,12 +121,14 @@ module.exports = ItemsNewController;
 /* 2 */
 /***/ (function(module, exports) {
 
-ItemsShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService'];
+ItemsShowController.$inject = ['$stateParams', 'ItemsService', 'UsersService', 'CommentsService'];
 
-function ItemsShowController($stateParams, ItemsService, UsersService) {
+function ItemsShowController($stateParams, ItemsService, UsersService, CommentsService) {
   var vm = this;
   vm.current = {};
-
+  vm.comments = [];
+  vm.addItemComment = addItemComment;
+  // vm.deleteItemComment = deleteItemComment;
   activate();
 
   function activate() {
@@ -138,7 +140,15 @@ function ItemsShowController($stateParams, ItemsService, UsersService) {
 
     ItemsService.loadItem($stateParams.itemId).then(function showItem(response) {
       vm.current = response.data.item;
+      vm.comments = response.data.item.comments;
       console.log('this is where the response is: ' + response);
+    });
+  }
+
+  function addItemComment(newComment) {
+    CommentsService.addComment(newComment).then(function addNewComment(response) {
+      vm.newComment.userId = response.data.cookie;
+      vm.comments.push(newComment);
     });
   }
 };
@@ -214,6 +224,7 @@ function UserShowController($stateParams, ItemsService, UsersService) {
   vm.deleteCurrentItem = deleteCurrentItem;
   vm.items = [];
   vm.updateItem = updateItem;
+  vm.newComment = {};
   vm.isEditing = false;
 
   activate();
@@ -252,8 +263,8 @@ module.exports = UserShowController;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(17);
-__webpack_require__(15);
+const angular = __webpack_require__(18);
+__webpack_require__(16);
 
 angular.module('projectThree', ['ui.router']).config(routerSetup);
 
@@ -289,7 +300,7 @@ function routerSetup($stateProvider, $urlRouterProvider) {
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(18);
+const template = __webpack_require__(19);
 
 const component = {
   controller: controller,
@@ -303,7 +314,7 @@ angular.module('projectThree').component('home', component);
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(1);
-const template = __webpack_require__(19);
+const template = __webpack_require__(20);
 
 const ItemsNewComponent = {
   template: template,
@@ -317,7 +328,7 @@ angular.module('projectThree').component('itemsNew', ItemsNewComponent);
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(2);
-const template = __webpack_require__(20);
+const template = __webpack_require__(21);
 
 const ItemsShowComponent = {
   template: template,
@@ -331,7 +342,7 @@ angular.module('projectThree').component('itemsShow', ItemsShowComponent);
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(3);
-const template = __webpack_require__(21);
+const template = __webpack_require__(22);
 
 const component = {
   controller: controller,
@@ -345,7 +356,7 @@ angular.module('projectThree').component('items', component);
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(4);
-const template = __webpack_require__(22);
+const template = __webpack_require__(23);
 
 const component = {
   controller: controller,
@@ -356,6 +367,48 @@ angular.module('projectThree').component('login', component);
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+angular.module('projectThree').service('CommentsService', CommentsService);
+
+CommentsService.$inject = ['$http'];
+
+function CommentsService($http) {
+  const self = this;
+
+  self.addComment = addComment;
+  self.deleteComment = deleteComment;
+
+  // Asks server for list of ALL items (regardless of creator)
+  // function loadAllComments() {
+  //   console.log('all comments loaded!');
+  //   return $http
+  //     .get('/api/items/');
+  // };
+
+  // function loadComment(itemId){
+  //   console.log(id);
+  //   return $http
+  //   .get('/api/items/' + id + );
+  // };
+
+  // Tells server to add new item to database
+  function addComment(newComment) {
+    return $http.post('/api/comments/', newComment);
+  };
+
+  // function loadThisUserComments(userId) {
+  //   return $http
+  //   .get('/api/items/filter/' + userId)
+  // };
+
+  function deleteComment(item) {
+    return $http.delete('/api/comments/' + comment._id);
+  };
+};
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 angular.module('projectThree').service('ItemsService', ItemsService);
@@ -404,7 +457,7 @@ function ItemsService($http) {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 angular.module('projectThree').service('UsersService', UsersService);
@@ -445,11 +498,11 @@ function UsersService($http) {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(5);
-const template = __webpack_require__(23);
+const template = __webpack_require__(24);
 
 const UserShowComponent = {
   template: template,
@@ -459,7 +512,7 @@ const UserShowComponent = {
 angular.module('projectThree').component('userShow', UserShowComponent);
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /**
@@ -5148,7 +5201,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /**
@@ -38525,51 +38578,51 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(16);
+__webpack_require__(17);
 module.exports = angular;
 
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser()'>\n      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n   <!--  <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\"> -->\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.title }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n<!--   Price: {{ $ctrl.newItem.price }} -->\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Sign Up</h2>\n    <form ng-submit='$ctrl.addUser()'>\n      <input class='form-control' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <input type='submit' value='Sign Up'>\n    </form>\n  </div>\n\n<!-- Log in section -->\n  <div class='login'>\n    <h3>Already a member?</h3>\n    <a ui-sref='login'><button>Log In</button></a>\n  </div>\n\n</div>\n";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n  </div>\n</div>\n";
+module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\n  <form ng-submit=\"$ctrl.addItem($ctrl.newItem)\">\n    <input type=\"text\" placeholder=\"title\" ng-model=\"$ctrl.newItem.title\">\n    <input type=\"text\" placeholder=\"Description\" ng-model=\"$ctrl.newItem.description\">\n   <!--  <input type=\"number\" placeholder=\"Price\" ng-model=\"$ctrl.newItem.price\"> -->\n    <input type=\"text\" placeholder=\"Image URL\" ng-model=\"$ctrl.newItem.image\">\n    <input type=\"text\" placeholder=\"City\" ng-model=\"$ctrl.newItem.city\">\n    <input type=\"text\" placeholder=\"State\" ng-model=\"$ctrl.newItem.state\">\n  <br><br>\n  <strong>New Item Info:</strong><br>\n  Name: {{ $ctrl.newItem.title }}\n  <br>\n  Description: {{ $ctrl.newItem.description }}\n  <br>\n<!--   Price: {{ $ctrl.newItem.price }} -->\n  <br>\n  City: {{ $ctrl.newItem.city }}\n  <br>\n  State: {{ $ctrl.newItem.state }}\n  <br>\n  <input type=\"submit\" value=\"Post Now\">\n  </form>\n</div>\n";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    <br><br>\n    <div ng-repeat=\"item in $ctrl.items\" class=\"item-card col-md-4\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>{{item.user.name}}</span>\n\t   <span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <p>{{$ctrl.current.title}}</p>\n      <p>{{$ctrl.current.description}}</p>\n\n     <div class='commentBox' ng-repeat='comment in $ctrl.comments'>\n     <p>Comment: {{comment.text}}</p>\n     <p>Posted by {{comment.userId}}</p>\n     <p>Posted: {{comment.created_at}}</p>\n     </div>    \n  </div>\n\t\t<div class='commentForm'>\n\t\t<form ng-submit='$ctrl.addItemComment(newComment)'>\n\t\t\t<input type=\"textarea\" name=\"text\" placeholder='text' ng-model='$ctrl.newComment'>\n\n\t\t<input type=\"submit\" value=\"Post Comment\">\n\n\t\t</form>\n\n\t</div> \n\n</div>\n";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
+module.exports = "<div class='items'>\n  <h1>Items</h1>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage Profile and Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    <br><br>\n    <div ng-repeat=\"item in $ctrl.items\" class=\"item-card col-md-4\">\n      <a ui-sref='itemsShow({ itemId: item._id})'>\n      <span class='posting-title'>{{item.title}}</span>\n      </a>\n      <br>\n\t   <span class='posting-description'>{{item.user.name}}</span>\n\t   <span class='posting-description'>{{item.description}}</span>\n\t<br><br>\n\n\n    </div>\n\n</div>\n";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\"> << Back to view all items</a>\n  </br>\n  <div>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n  </div>\n  <div class=\"user-items col-md-4\" ng-repeat=\"item in $ctrl.items\">\n    <li><strong>{{item.title}}</strong></li>\n    <li>Description: {{item.description}}</li>\n    <li>Location: {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button ng-show=\"item.isEditing\" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n";
+module.exports = "<div class='home'>\n\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Login</h2>\n    <form ng-submit='$ctrl.login()'>\n      <input class='form-control' type='text' placeholder='Email Address' ng-model='$ctrl.user.email'>\n      <input class='form-control' type='password' placeholder='Password' ng-model='$ctrl.user.password'>\n      <input type='submit' value='Log In'>\n    </form>\n  </div>\n\n</div>\n";
 
 /***/ }),
 /* 24 */
+/***/ (function(module, exports) {
+
+module.exports = "<div>\n  <h1> this is your profile </h1>\n  <a ui-sref=\"items\"> << Back to view all items</a>\n  </br>\n  <div>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n  </div>\n  <div class=\"user-items col-md-4\" ng-repeat=\"item in $ctrl.items\">\n    <li><strong>{{item.title}}</strong></li>\n    <li>Description: {{item.description}}</li>\n    <li>Location: {{item.city}}, {{item.state}}</li>\n    <span ng-click=\"item.isEditing=true\"><button>Edit</button></span>\n    <button ng-show=\"item.isEditing\" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>\n      <form ng-show=\"item.isEditing\" ng-submit=\"$ctrl.updateItem(item)\">\n        <div>\n          <label for=\"new-item-title\">Title</label>\n            <input type=\"text\" id=\"new-item-title\" ng-model='item.title'><br>\n          <label for=\"new-item-description\">Description</label>\n            <input type=\"text\" id=\"new-item-description\" ng-model='item.description'><br>\n          <label for=\"new-item-city\">City</label>\n            <input type=\"text\" id=\"new-item-city\" ng-model='item.city'><br>\n          <label for=\"new-item-state\">State</label>\n            <input type=\"text\" id=\"new-item-state\" ng-model='item.state'><br>\n            <input type=\"submit\" value=\"Update Item\">\n        </div>\n</div>\n</div>\n";
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(6);
@@ -38586,6 +38639,7 @@ __webpack_require__(4);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(14);
+__webpack_require__(15);
 module.exports = __webpack_require__(5);
 
 
