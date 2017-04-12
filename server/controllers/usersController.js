@@ -31,6 +31,21 @@ router.post('/', authHelpers.createSecure, function(req, res){
 });
 
 
+// Retrieve current user
+router.get('/:id', function showUser(req, res){
+  var id = req.params.id;
+  User
+  .findById({_id: id})
+  .exec(function(err, user) {
+    if(err) {console.log(err)}
+      res.json({
+        user: user
+      });
+  });
+});
+
+
+
 // Retrieve name of current user
 router.get('/name/:id', function showIndivItem(req, res){
   var id = req.params.id;
@@ -48,5 +63,31 @@ router.get('/name/:id', function showIndivItem(req, res){
 router.post("/login", authHelpers.loginUser, function(req, res) {
   console.log("logged in");
 });
+
+
+router.patch('/tokens/dec/:id', function getUser(req, res){
+  var id = req.params.id;
+  User
+  .findByIdAndUpdate({_id: id}, { '$inc': {'tokens': -1}})
+  .exec(function(err, user) {
+    user.save();
+    res.json({
+        user: user
+      });
+  });
+});
+
+router.patch('/tokens/inc/:id', function getUser(req, res){
+  var id = req.params.id;
+  User
+  .findByIdAndUpdate({_id: id}, { '$inc': {'tokens': 10}})
+  .exec(function(err, user) {
+    user.save();
+    res.json({
+        user: user
+      });
+  });
+});
+
 
 module.exports = router;

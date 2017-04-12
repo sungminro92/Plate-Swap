@@ -1,10 +1,9 @@
-<div class="add-new-item">
+<!-- <div class="add-new-item">
   <h1> Create a Listing </h1>
 
   <form ng-submit="$ctrl.addItem($ctrl.newItem)">
     <input type="text" placeholder="title" ng-model="$ctrl.newItem.title">
     <input type="text" placeholder="Description" ng-model="$ctrl.newItem.description">
-   <!--  <input type="number" placeholder="Price" ng-model="$ctrl.newItem.price"> -->
     <input type="upload" placeholder="Image URL" ng-model="$ctrl.newItem.image">
     <input type="text" placeholder="City" ng-model="$ctrl.newItem.city">
     <input type="text" placeholder="State" ng-model="$ctrl.newItem.state">
@@ -14,7 +13,6 @@
   <br>
   Description: {{ $ctrl.newItem.description }}
   <br>
-<!--   Price: {{ $ctrl.newItem.price }} -->
   <br>
   City: {{ $ctrl.newItem.city }}
   <br>
@@ -22,4 +20,50 @@
   <br>
   <input type="submit" value="Post Now">
   </form>
+</div> -->
+
+
+
+
+<div class='itemNewPage' >
+  <div class='items-header'>
+    <div class='left-section'>
+    <h1>Create a new food offer</h1>
+    </div>
+    <div class='right-section'>
+    <a ui-sref='items'><button>View All Available Items</button></a>
+    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>
+    </div>
+  </div>
+  <div class='card-area newItemBody'>
+  <div class='inputCard'>
+  <form ng-submit="$ctrl.addItem($ctrl.newItem)">
+    <input type="text" class="itemInput" ng-model='$ctrl.newItem.title' placeholder='Title'>
+    <textarea rows="4" cols="50" type="text" class="itemInput" ng-model='$ctrl.newItem.description' placeholder='Food Description'></textarea>
+    <input type="text" class="itemInput" ng-model="$ctrl.newItem.image" placeholder='Image Url'>
+    <input type="text" class="itemInput" ng-model='$ctrl.newItem.city' placeholder='City'>
+    <input type="text" class="itemInput" ng-model="$ctrl.newItem.state" placeholder="State">
+    <br>
+    <input class="newItemSubmit" type="submit" value="Post Item">
+    </form>
+    </div>
+    <div class='item-card itemNewInfo'>
+
+      <div style="height: 150px"><img style='width: 200px ' ng-src={{$ctrl.newItem.image}}> </div><br>
+
+      <div>
+        <strong>New Item Info:</strong>
+        <p>Name: {{$ctrl.newItem.title}}</p>
+        <p>Description: {{$ctrl.newItem.description }}</p>
+        <p>City:{{$ctrl.newItem.city }}</p>
+        <p>State: {{$ctrl.newItem.state }}</p>
+      </div>
+    </div>
+    <br><br>
+    <div class='newItemShow'>
+
+    </div>
+
+
+  </div>
 </div>

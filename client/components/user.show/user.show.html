@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <div class='items-header'>
     <div class='left-section'>
   <h1>Manage your items</h1>
@@ -31,4 +31,53 @@
 </div>
 </div>
 
-<div>
+<div> -->
+
+
+
+<div class='itemShow'>
+  <div class='items-header'>
+    <div class='left-section'>
+    <h1>Manage your items</h1>
+    </div>
+    <div class='right-section'>
+    <a ui-sref='items'><button>View All Available Items</button></a>
+    <a ui-sref="itemsNew"><button>Create New Offer</button></a>
+    </div>
+  </div>
+  <div class='card-area'>
+    <div class="user-items" ng-repeat="item in $ctrl.items">
+      <img ng-src={{item.image}} alt="Description" />
+      <li class="posting-title"><strong>{{item.title}}</strong></li>
+      <li class="posting-description"><strong>Description:</strong> {{item.description}}</li>
+      <li class="posting-location"><strong>Location:</strong> {{item.city}}, {{item.state}}</li>
+      <div class='posting-time'>Posted at: {{item.created_at| date: 'short'}}</div>
+      <span ng-click="item.isEditing=true"><button class='editDeleteBtn'>Edit</button></span>
+      <button class='editDeleteBtn' ng-show="item.isEditing" ng-click='$ctrl.deleteCurrentItem(item)'>Delete</button>
+
+      <br>
+      <div class="formBox">
+      <form ng-show="item.isEditing" ng-submit="$ctrl.updateItem(item)">
+        <div>
+          <label for="new-item-title">Title: </label>
+          <input type="text" class="newItemInput" ng-model='item.title'>
+        </div>
+        <div>
+          <label for="new-item-description">Description: </label>
+          <input type="text" class="newItemInput" ng-model='item.description'>
+        </div>
+        <div>
+          <label for="new-item-city">City: </label>
+          <input type="text" class="newItemInput" ng-model='item.city'>
+        </div>
+        <div>
+          <label for="new-item-state">State: </label>
+          <input type="text" class="newItemInput" ng-model='item.state'>
+        </div>
+        <div>
+          <input class="newItemSubmit" type="submit" value="Update Item">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
