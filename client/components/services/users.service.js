@@ -12,6 +12,9 @@ function UsersService($http) {
   self.login = login;
   self.getCookie = getCookie;
   self.getUserName = getUserName;
+  self.decrementToken = decrementToken;
+  self.getTokens = getTokens;
+  self.loadUser = loadUser;
 
 // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -21,7 +24,6 @@ function UsersService($http) {
   };
 
   function loadUser(id){
-    console.log(id);
     return $http
     .get('/api/users/' + id);
   };
@@ -39,6 +41,16 @@ function UsersService($http) {
   function login(user) {
     return $http
       .post('/api/users/login', user);
+  };
+
+  function decrementToken(user) {
+    return $http
+      .patch('/api/users/tokens/dec/' + user);
+  };
+
+  function getTokens(user) {
+    return $http
+      .patch('/api/users/tokens/inc/' + user);
   };
 
 // Tells server to add new user to database

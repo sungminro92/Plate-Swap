@@ -5,6 +5,7 @@ function ItemsNewController($state, UsersService, ItemsService) {
   vm.addItem = addItem;
   vm.newItem = {};
   activate();
+  vm.cookie = {};
 
   function activate() {
     getCookie();
@@ -15,11 +16,19 @@ function ItemsNewController($state, UsersService, ItemsService) {
     ItemsService
       .addItem(newItem)
       .then(function(){
-        console.log(vm.newItem.userId);
+        getTokens(vm.cookie);
         $state.go('userShow', {userId: vm.newItem.userId});
       });
   };
 
+  function getTokens(){
+    console.log('getting tokens');
+    UsersService
+    .getTokens(vm.cookie)
+    .then(function(response){
+      console.log(response);
+    })
+  }
 
   function getCookie() {
     UsersService
@@ -27,6 +36,7 @@ function ItemsNewController($state, UsersService, ItemsService) {
     .then(function display(response) {
       getUserName(response.data.cookie);
       vm.newItem.userId = response.data.cookie;
+      vm.cookie = response.data.cookie;
     })
   }
 

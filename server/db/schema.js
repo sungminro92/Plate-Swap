@@ -28,7 +28,8 @@ var ItemSchema = new Schema({ // item Schema
 	used: Boolean,
 	comments: [CommentSchema],
 	userId: String,
-	userName: String
+	userName: String,
+	numAvailable: Number
 });
 
 ItemSchema.pre('save', function(next) {
@@ -44,7 +45,9 @@ var UserSchema = new Schema({
 	name: String,
 	email: String,
 	password: String,
-	token: Number
+	token: Number,
+	itemsClaimed: [ItemSchema],
+	tokens: Number
 });
 
 

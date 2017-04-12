@@ -153,6 +153,7 @@ function ItemsNewController($state, UsersService, ItemsService) {
   vm.addItem = addItem;
   vm.newItem = {};
   activate();
+  vm.cookie = {};
 
   function activate() {
     getCookie();
@@ -161,15 +162,23 @@ function ItemsNewController($state, UsersService, ItemsService) {
   function addItem(newItem) {
     console.log(newItem);
     ItemsService.addItem(newItem).then(function () {
-      console.log(vm.newItem.userId);
+      getTokens(vm.cookie);
       $state.go('userShow', { userId: vm.newItem.userId });
     });
   };
+
+  function getTokens() {
+    console.log('getting tokens');
+    UsersService.getTokens(vm.cookie).then(function (response) {
+      console.log(response);
+    });
+  }
 
   function getCookie() {
     UsersService.getCookie().then(function display(response) {
       getUserName(response.data.cookie);
       vm.newItem.userId = response.data.cookie;
+      vm.cookie = response.data.cookie;
     });
   }
 
@@ -243,6 +252,9 @@ function ItemsController($state, UsersService, ItemsService) {
   const vm = this;
   vm.items = [];
   vm.cookie = [];
+  vm.tokens = 0;
+  vm.claimThisItem = claimThisItem;
+  vm.disabled = false;
   activate();
 
   function activate() {
@@ -262,8 +274,43 @@ function ItemsController($state, UsersService, ItemsService) {
   function getCookie() {
     UsersService.getCookie().then(function display(response) {
       vm.cookie = response.data.cookie;
-      console.log(response.data.cookie);
+      checkForTokens(vm.cookie);
     });
+  }
+
+  function checkForTokens(cookie) {
+    var userId = cookie;
+    UsersService.loadUser(cookie).then(function (response) {
+      vm.tokens = response.data.user.tokens;
+      checkEligibility(vm.tokens);
+    });
+  }
+
+  function checkEligibility(tokens) {
+    if (tokens <= 0) {
+      vm.disabled = true;
+    } else {
+      console.log('still eligible to claim');
+    }
+  }
+
+  function claimThisItem(thisItem) {
+    item = thisItem;
+    item.disabled = true;
+    decrementTokens(vm.cookie);
+    addToClaimedList(vm.cookie);
+  }
+
+  function decrementTokens(cookie) {
+    UsersService.decrementToken(cookie).then(function (response) {
+      console.log(response);
+      checkForTokens(cookie);
+    });
+  }
+
+  function addToClaimedList(cookie) {
+    userId = cookie;
+    console.log('add to claimed list');
   }
 };
 
@@ -566,6 +613,9 @@ function UsersService($http) {
   self.login = login;
   self.getCookie = getCookie;
   self.getUserName = getUserName;
+  self.decrementToken = decrementToken;
+  self.getTokens = getTokens;
+  self.loadUser = loadUser;
 
   // Asks server for list of ALL items (regardless of creator)
   function loadAll() {
@@ -574,7 +624,6 @@ function UsersService($http) {
   };
 
   function loadUser(id) {
-    console.log(id);
     return $http.get('/api/users/' + id);
   };
 
@@ -588,6 +637,14 @@ function UsersService($http) {
 
   function login(user) {
     return $http.post('/api/users/login', user);
+  };
+
+  function decrementToken(user) {
+    return $http.patch('/api/users/tokens/dec/' + user);
+  };
+
+  function getTokens(user) {
+    return $http.patch('/api/users/tokens/inc/' + user);
   };
 
   // Tells server to add new user to database
@@ -38700,7 +38757,7 @@ module.exports = "<footer id='footer'>\n  <div class='footer'>\n    <div class='
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='homePage'>\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Hello!</h2>\n    <form ng-hide=\"$ctrl.cookied\" class='signup-form' ng-submit='$ctrl.addUser()'>\n      <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='inputForm' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <br>\n      <input class='submitBtn ghost' type='submit' value='Sign Up'>\n    </form>\n    <div ng-show=\"$ctrl.cookied\">\n    <p class='login'>Welcome back, {{$ctrl.userName}}.</p>\n    <a ui-sref='items'>\n      <button class='submitBtn ghost'>Get Started</button>\n    </a>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class='homePage'>\n<!-- Sign up form -->\n  <div class='signup'>\n    <h2>Hello!</h2>\n    <form ng-hide=\"$ctrl.cookied\" class='signup-form' ng-submit='$ctrl.addUser()'>\n      <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>\n      <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>\n      <input class='inputForm' type='password' placeholder='Password' ng-model='$ctrl.newUser.password'>\n      <br>\n      <input class='submitBtn ghost' type='submit' value='Sign Up'>\n    </form>\n    <div ng-show=\"$ctrl.cookied\">\n    <p class='login'>Welcome back, {{$ctrl.userName}}.</p>\n    <a ui-sref='items'>\n      <button class='submitBtn ghost'>Start Swapping</button>\n    </a>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 26 */
@@ -38712,13 +38769,13 @@ module.exports = "<div class=\"add-new-item\">\n  <h1> Create a Listing </h1>\n\
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <h3>{{$ctrl.current.title}}</h3>\n      <p>Posted By: {{$ctrl.current.userName}}</p>\n      <p>{{$ctrl.current.description}}</p>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat=\"comment in $ctrl.comments | orderBy: '-created_at'\">\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n      <li><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class=\"itemsShow\">\n  <div class=\"itemImage\">\n  <a ui-sref=\"items\"> back to items</a>\n      <!-- <img src=\"{{$ctrl.current.image}}\"> -->\n      <h3>{{$ctrl.current.title}}</h3>\n      <p>Posted By: {{$ctrl.current.userName}}</p>\n      <p>{{$ctrl.current.description}}</p>\n      <button class=\"claim-button\">Claim</button>\n    <h3>Comments</h3>\n    <div class='commentForm'>\n      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>\n        <input class='comment-textarea' type=\"text\" name=\"text\" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>\n        <input type=\"submit\" value=\"Post Comment\">\n      </form>\n    </div>\n    <div class='comment-box' ng-repeat=\"comment in $ctrl.comments | orderBy: '-created_at'\">\n      <li><strong>Comment:</strong> {{comment.text}}</li>\n      <li><strong>Posted by:</strong> {{comment.userName}}</li>\n      <li><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Browse Available Foods</h1>\n    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a>\n    </div>\n  </div>\n    <div class='card-area'>\n      <div ng-repeat=\"item in $ctrl.items | filter:searchString | orderBy: '-created_at'\" class=\"item-card\">\n        <div class='card-content'>\n          <a ui-sref='itemsShow({ itemId: item._id})'>\n          <img ng-src={{item.image}} alt=\"Description\" />\n          <div class='posting-title'>{{item.title}}</div></a>\n          <div class='posting-description'>{{item.description}}</div>\n      \t   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>\n          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>\n          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>\n        </div>\n      </div>\n    </div>\n<div>\n";
+module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Browse Available Foods</h1>\n    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a><br>\n    <span class='token-counter'>Tokens remaining: <span ng-model='$ctrl.tokens'>{{$ctrl.tokens}}</span></span>\n    </div>\n  </div>\n    <div class='card-area'>\n      <div ng-repeat=\"item in $ctrl.items | filter:searchString | orderBy: '-created_at'\" class=\"item-card\">\n        <div class='card-content'>\n          <a ui-sref='itemsShow({ itemId: item._id})'>\n          <img ng-src={{item.image}} alt=\"Description\" />\n          <div class='posting-title'>{{item.title}}</div></a>\n          <div class='posting-description'>{{item.description}}</div>\n      \t   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>\n          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>\n          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>\n          <button ng-disabled=\"item.disabled || $ctrl.disabled\" ng-click='$ctrl.claimThisItem(item)' class='claim-button' style=\"float:right\">Claim</button>\n        </div>\n      </div>\n    </div>\n<div>\n";
 
 /***/ }),
 /* 29 */
