@@ -36,7 +36,7 @@
 
 
 <div class='itemShow'>
-  
+
   <div class='items-header'>
     <div class='left-section'>
     <h1>Manage your items</h1>
@@ -44,10 +44,10 @@
     <div class='right-section'>
     <a ui-sref='items'><button>View All Available Items</button></a>
     <a ui-sref="itemsNew"><button>Create New Offer</button></a>
-    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>
+<!--     <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a> -->
     </div>
   </div>
-  
+
   <div class='card-area'>
     <div class="user-items" ng-repeat="item in $ctrl.items">
       <img ng-src={{item.image}} alt="Description" />

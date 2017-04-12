@@ -32,6 +32,13 @@ function ItemsController($state, UsersService,ItemsService) {
     });
   };
 
+// This is code for future development and login functionality
+   // function killCookie() {
+   //    vm.cookie = {};
+   //    $state.go('/');
+   //  };
+
+
   function checkForTokens(cookie) {
     var userId = cookie;
     UsersService
