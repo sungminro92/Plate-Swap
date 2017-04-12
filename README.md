@@ -48,8 +48,9 @@ We started by brainstorming several potential app ideas and evaluated their feas
 Trello Board: https://trello.com/b/P4QamORT/project3
 
 ### ERD 
-Click here to view our ERD
+![](images/EARDdiagram.jpg?raw=true)
 
 ### Wireframes
-Click here to view our wireframes
+![](images/notes1.jpg?raw=true)
+![](images/notes2.png?raw=true)
 
