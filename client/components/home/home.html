@@ -1,7 +1,7 @@
 <div class='homePage'>
 <!-- Sign up form -->
   <div class='signup'>
-    <h2>Sign Up</h2>
+    <h2>Hello!</h2>
     <form ng-hide="$ctrl.cookied" class='signup-form' ng-submit='$ctrl.addUser()'>
       <input class='inputForm' type='text' placeholder='Name' ng-model='$ctrl.newUser.name'>
       <input class='inputForm' type='text' placeholder='Email Address' ng-model='$ctrl.newUser.email'>
@@ -10,7 +10,7 @@
       <input class='submitBtn ghost' type='submit' value='Sign Up'>
     </form>
     <div ng-show="$ctrl.cookied">
-    <p class='login'>Welcome back, {{$ctrl.userName}} !!</p>
+    <p class='login'>Welcome back, {{$ctrl.userName}}.</p>
     <a ui-sref='items'>
       <button class='submitBtn ghost'>Get Started</button>
     </a>
