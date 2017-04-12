@@ -2,6 +2,14 @@
 /* Font's We're using */
 /*font-family: 'Palanquin Dark', sans-serif;*/
 /*font-family: 'Dosis', sans-serif;*/
+/* PAPAYA  #E24E42  */
+/* LIGHTBLUE #4484CE */
+/* LIGHTGRAY #C5C1C0 */
+/* MUSTARDYELLOW #E9B000 */
+/* AQUABLUE #008F95 */
+/* DARKGRAY #1A2930 */
+
+
 body {
   height: 100%;
 }
@@ -22,11 +30,17 @@ body {
 }
 
 .logo {
-  position: flex;
+  display: flex;
   margin: 15px auto 0px auto;
-  width: 150px;
+  width: 500px;
   height: 100px;
   background-color: white;
+  text-align: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 65%;
 }
 
 .navBar {
@@ -140,6 +154,7 @@ div p {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
+  justify-content: center;
 }
 
 .token-counter {
@@ -226,6 +241,8 @@ div p {
   background: #e24e42;
   padding-left: 20px;
   display: flex;
+  width: 100%;
+  height: 100px;
   flex-direction: row;
   align-items: center;
 }
@@ -322,6 +339,9 @@ div p {
 .aboutPage {
   text-align: center;
   width: 100%;
+  background: #e24e42;
+  color: white;
+  height: 500px;
 }
 .aboutTitle{
   font-family: 'Palanquin Dark', sans-serif;
@@ -386,4 +406,55 @@ input.inputForm {
   font-size: 30px;
   color: white;
   text-shadow: 1px 1px 1px #1A2930;
+}
+
+/* --- NEWELY ADDED ---*/
+/* USER SHOW PAGE */
+.editDeleteBtn {
+  border-radius: 2px;
+  margin: 3px 3px 5px 2px;
+}
+.newItemInput {
+  margin: 3px 0px 3px 5px ;
+}
+.newItemSubmit {
+  border-radius: 2px;
+  background-color: transparent;
+  color: #008F95;
+  border: 2px solid #008F95;
+  width: 100px;
+  height: 40px;
+  transition: .2s ease;
+  margin-top: 10px;
+  margin-left: 7px;
+  font-size: 15px;
+}
+.newItemSubmit:hover {
+    background-color: #008F95;
+    color: white;
+    transition: .2s ease;
+}
+/* ITEM NEW PAGE */
+.itemNewInfo {
+  min-width: 500px;
+  width: 40%;
+}
+.itemNewInfo p {
+  display: block;
+}
+.itemInput {
+  color: #E24E42;
+  margin: 3px 0px 3px 5px ;
+  width: 350px;
+}
+.inputCard {
+  background: white;
+  margin: 15px;
+  padding: 15px;
+  width: 400px;
+  border-radius: 5px;
+}
+.error-messages {
+  color: #E24E42;
+  position: relative;
 }
