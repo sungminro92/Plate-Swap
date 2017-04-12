@@ -50,6 +50,8 @@ Trello Board: https://trello.com/b/P4QamORT/project3
 ### ERD 
 ![](public/images/ERDdiagram.jpg?raw=true)
 
+Our ERD diagram has been changed since our initial idea for the app changed.
+
 ### Wireframes
 ![](public/images/notes1.jpg?raw=true)
 ![](public/images/notes2.jpg?raw=true)
