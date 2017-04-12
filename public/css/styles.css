@@ -279,13 +279,6 @@ div p {
   width: 40%;
 }
 
-.comment-box {
-  margin: 15px;
-  padding: 15px;
-  border: 2px solid gray;
-  list-style-type: none;
-}
-
 .comment-textarea {
   width: 40%;
   margin: 15px;
@@ -350,7 +343,7 @@ div p {
 .aboutContent p {
   font-family: 'Dosis', sans-serif;
   font-size: 15px;
-  max-width: 700px;
+  max-width: 500px;
   width: 70%;
 }
 
@@ -479,4 +472,81 @@ input.inputForm {
 .error-messages {
   color: #E24E42;
   position: relative;
+}
+
+.itemsShow {
+  background: yellow;
+}
+/* NEWLY ADDED FOR ITEM SHOW PAGE*/
+.itemsShowWrap {
+  background: #d9d9d9;
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  justify-content: center;
+}
+
+.itemsShowLeft {
+  width: 40%;
+  height: 100%;
+  background:white;
+  background: white;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 5px;
+
+}
+
+.itemsShowRight {
+  width: 40%;
+  height: 100%;
+  background:white;
+  background: white;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.imageWrap {
+  text-align: center;
+}
+
+.commentText {
+  width: 94%;
+  margin: 15px;
+  margin: 15px;
+  padding: 15px;
+  border: 2px solid gray;
+  list-style-type: none;
+}
+
+.comment-box {
+  margin: 15px;
+  padding: 15px;
+  border: 2px solid #008F95;
+  list-style-type: none;
+}
+
+.newCommentSubmit {
+  border-radius: 2px;
+  background-color: transparent;
+  color: #008F95;
+  border: 2px solid #008F95;
+  width: 200px;
+  height: 40px;
+  transition: .2s ease;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  font-size: 15px;
+}
+.newCommentSubmit:hover {
+  background-color: #008F95;
+  color: white;
+  transition: .2s ease;
+}
+
+.aboutContent strong {
+  font-family: 'Dosis', sans-serif;
+  font-size: 30px;
 }

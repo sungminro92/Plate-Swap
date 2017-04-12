@@ -1,21 +1,41 @@
 <div class="itemsShow">
-  <div class="itemImage">
-  <a ui-sref="items"> back to items</a>
-      <!-- <img src="{{$ctrl.current.image}}"> -->
-      <h3>{{$ctrl.current.title}}</h3>
+    <div class='items-header'>
+      <div class='left-section'>
+        <h1>Item Details</h1>
+    <!--     <a ui-sref="items"> < back to items</a> -->
+      </div>
+      <div class='right-section'>
+        <a ui-sref='items'><button>View All Available Items</button></a>
+        <a ui-sref="itemsNew"><button>Create New Offer</button></a><br>
+        <span class='token-counter'>Tokens remaining: <span ng-model='$ctrl.tokens'>{{$ctrl.tokens}}</span></span>
+      </div>
+    </div>
+      
+      <div class="itemsShowWrap">
+      <div class='itemsShowLeft'>
+        <div class='imageWrap'>
+          <img style='width:98%' src={{$ctrl.current.image}}>
+        </div>
+      <p class='posting-title'>{{$ctrl.current.title}}</h3>
       <p>Posted By: {{$ctrl.current.userName}}</p>
       <p>{{$ctrl.current.description}}</p>
-    <h3>Comments</h3>
-    <div class='commentForm'>
-      <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>
-        <input class='comment-textarea' type="text" name="text" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'>
-        <input type="submit" value="Post Comment">
-      </form>
+      </div>
+    
+      <div class="itemsShowRight">
+        <div class='commentForm'>
+          <p class='posting-title'>Comments</p>
+          <form ng-submit='$ctrl.addItemComment($ctrl.newComment)'>
+            <textarea class='commentText' type="text" name="text" placeholder='Type your comment here' ng-model='$ctrl.newComment.text'></textarea>
+            <input class="newCommentSubmit" type="submit" value="Post Comment">
+          </form>
+        </div>
+
+        <div class='comment-box' ng-repeat="comment in $ctrl.comments | orderBy: '-created_at'">
+          <li>Comment:</strong> {{comment.text}}</li>
+          <li><strong>Posted by:</strong> {{comment.userName}}</li>
+          <li ng-show="{{comment.created_at}}"><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>
+        </div>
+      </div>
     </div>
-    <div class='comment-box' ng-repeat="comment in $ctrl.comments | orderBy: '-created_at'">
-      <li><strong>Comment:</strong> {{comment.text}}</li>
-      <li><strong>Posted by:</strong> {{comment.userName}}</li>
-      <li ng-show="{{comment.created_at}}"><strong>Posted:</strong> {{comment.created_at| date: 'short'}}</li>
-    </div>
-  </div>
+
 </div>
