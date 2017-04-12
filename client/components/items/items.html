@@ -20,7 +20,7 @@
       	   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>
           <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>
           <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>
-          <button ng-disabled="item.disabled || $ctrl.disabled" ng-click='$ctrl.claimThisItem(item)' class='claim-button' style="float:right">Claim</button>
+          <button ng-disabled="item.disabled || $ctrl.disabled" ng-click='$ctrl.claimThisItem(item)' class='claim-button' style="float:right">{{item.status ? item.status: 'Claim'}}</button>
         </div>
       </div>
     </div>
