@@ -7,7 +7,8 @@
     <div class='right-section'>
     <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>
     <a ui-sref="itemsNew"><button>Create New Offer</button></a><br>
-    <span class='token-counter'>Tokens remaining: <span ng-model='$ctrl.tokens'>{{$ctrl.tokens}}</span></span>
+    <span ng-show="$ctrl.tokens"><span class='token-counter'>Tokens remaining: <span ng-model='$ctrl.tokens'>{{$ctrl.tokens}}</span></span></span>
+    <span ng-hide="$ctrl.tokens"><span class='token-counter'>Add an item to earn tokens!</span></span>
     </div>
   </div>
     <div class='card-area'>

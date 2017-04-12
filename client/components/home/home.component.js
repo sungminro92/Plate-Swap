@@ -1,3 +1,4 @@
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = require('./home.controller.js');
 const template = require('./home.html');
 

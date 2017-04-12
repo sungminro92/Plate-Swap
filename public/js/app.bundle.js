@@ -70,6 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
+// This is where we set up an empty controller function to handle our static template html
 function AboutController() {
     var vm = this;
 }
@@ -80,6 +81,7 @@ module.exports = AboutController;
 /* 1 */
 /***/ (function(module, exports) {
 
+// This is where we set up an empty controller function to handle our static template html
 function ContactController() {
     var vm = this;
 }
@@ -90,9 +92,13 @@ module.exports = ContactController;
 /* 2 */
 /***/ (function(module, exports) {
 
+// In order to use the $state service and the UsersService
+// we created on our Welcome page, we needed to INJECT them into our controller using Angular's $.inject
 HomeController.$inject = ['$state', 'UsersService'];
 
+// This is where define the HomeController function and all the properties and methods that we can access in the Home page view
 function HomeController($state, UsersService) {
+  // setting a var vm to this allows us to establish a Controller function scope
   const vm = this;
   vm.addUser = addUser;
   vm.newUser = {};
@@ -285,7 +291,7 @@ function ItemsController($state, UsersService, ItemsService) {
   };
 
   function checkEligibility(tokens) {
-    if (tokens <= 0) {
+    if (tokens <= 0 || tokens === null || tokens === undefined) {
       vm.disabled = true;
     } else {
       console.log('still eligible to claim');
@@ -419,6 +425,7 @@ function routerSetup($stateProvider, $urlRouterProvider) {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(0);
 const template = __webpack_require__(23);
 
@@ -433,6 +440,7 @@ angular.module('projectThree').component('about', component);
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(1);
 const template = __webpack_require__(24);
 
@@ -447,6 +455,7 @@ angular.module('projectThree').component('contact', component);
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(2);
 const template = __webpack_require__(25);
 
@@ -461,6 +470,7 @@ angular.module('projectThree').component('home', component);
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(3);
 const template = __webpack_require__(26);
 
@@ -475,6 +485,7 @@ angular.module('projectThree').component('itemsNew', ItemsNewComponent);
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(4);
 const template = __webpack_require__(27);
 
@@ -489,6 +500,7 @@ angular.module('projectThree').component('itemsShow', ItemsShowComponent);
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(5);
 const template = __webpack_require__(28);
 
@@ -503,6 +515,7 @@ angular.module('projectThree').component('items', component);
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(6);
 const template = __webpack_require__(29);
 
@@ -649,6 +662,7 @@ function UsersService($http) {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// We set up and named our component by requiring our controller and template html and assigning them variables
 const controller = __webpack_require__(7);
 const template = __webpack_require__(30);
 
@@ -38737,13 +38751,13 @@ module.exports = angular;
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class='aboutPage'>\n    <p class='aboutTitle'>About PlateSwap</p>\n\n    <div class='aboutContent'>\n\t<p>Food Swaps have become more and more popular in Atlanta as well as across the country. PlateSwap is a web app that enables homemade food lovers to browse and swap their creations online.</p>\n\t<strong class='boldText'> What is a food swap? </p>\n\t<p>A food swap is an event where members of a community share homemade, homegrown, or foraged goods with each other. Swaps allow direct trades to take place between participants (i.e. a loaf of bread for a jar of pickles). Swaps are a great way to diversify the homemade foods in your own pantry and make some friends.\n\t(Source: FoodSwapNetwork.com)<br><br></p>\n\t<strong class='boldText'> How does PlateSwap work?</strong><br>\n\t<p>If you have a specialty homemade item that you want to share with others, you can post an offer online on PlateSwap. Each offer that you post must include 10 of each item. For every type of offer you post, you'll get 10 tokens to use to claim one of another participant's posted items (1 token = 1 claimed item).</p>\n    </div>\n\t</div>\n";
+module.exports = "<!-- This is a static page to display an about us page -->\n<div class='aboutPage'>\n    <p class='aboutTitle'>About PlateSwap</p>\n\n    <div class='aboutContent'>\n\t   <p>Food Swaps have become more and more popular in Atlanta as well as across the country. PlateSwap is a web app that enables homemade food lovers to browse and swap their creations online.</p>\n\t       <strong class='boldText'> What is a food swap? </p>\n\t   <p>A food swap is an event where members of a community share homemade, homegrown, or foraged goods with each other. Swaps allow direct trades to take place between participants (i.e. a loaf of bread for a jar of pickles). Swaps are a great way to diversify the homemade foods in your own pantry and make some friends.\n\t   (Source: FoodSwapNetwork.com)<br><br></p>\n\t        <strong class='boldText'> How does PlateSwap work?</strong><br>\n\t   <p>If you have a specialty homemade item that you want to share with others, you can post an offer online on PlateSwap. Each offer that you post must include 10 of each item. For every type of offer you post, you'll get 10 tokens to use to claim one of another participant's posted items (1 token = 1 claimed item).</p>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "<footer id='footer'>\n  <div class='footer'>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/BxKQE5m.png'>\n    </div>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/62Fj9m0.png'>\n    </div>\n    <div class='contributers'>\n        <img style='height:200px' src='http://i.imgur.com/7fN6lye.png'>\n    </div>\n  </div>\n  <div class='footer2'>\n    <div class='name'><p>Erin Martin</p></div>\n    <div class='name'><p>Harry Karambizi</p></div>\n    <div class='name'><p>Sungmin Ro</p></div>\n  </div>\n   <div class='footer3'>\n    <div class='github'><a href=\"https://github.com/deviea8/\" target=_blank><p>GitHub<img src='http://i.imgur.com/yPOshs9.png'></p></div>\n    <div class='github'><a href=\"https://github.com/hkarambizi/\" target=_blank><p>GitHub<img src='http://i.imgur.com/yPOshs9.png'></p></div>\n    <div class='github'><a href=\"https://github.com/tjdals504/\" target=_blank><p>GitHub<img src='http://i.imgur.com/yPOshs9.png'></p></div>\n    </div>\n</footer>\n\n";
+module.exports = "<!-- This is a html to display a static Contact Developer page -->\n<footer id='footer'>\n    <div class='footer'>\n        <div class='contributers'>\n            <img style='height:200px' src='http://i.imgur.com/BxKQE5m.png'>\n        </div>\n        <div class='contributers'>\n            <img style='height:200px' src='http://i.imgur.com/62Fj9m0.png'>\n        </div>\n        <div class='contributers'>\n            <img style='height:200px' src='http://i.imgur.com/7fN6lye.png'>\n        </div>\n  </div>\n  <div class='footer2'>\n      <div class='name'><p>Erin Martin</p></div>\n      <div class='name'><p>Harry Karambizi</p></div>\n      <div class='name'><p>Sungmin Ro</p></div>\n  </div>\n  <div class='footer3'>\n      <div class='github'><a href=\"https://github.com/deviea8/\" target=_blank><p>GitHub<img src='http://i.imgur.com/yPOshs9.png'></p></div>\n      <div class='github'><a href=\"https://github.com/hkarambizi/\" target=_blank><p>GitHub<img src='http://i.imgur.com/yPOshs9.png'></p></div>\n      <div class='github'><a href=\"https://github.com/tjdals504/\" target=_blank><p>GitHub<img src='http://i.imgur.com/yPOshs9.png'></p></div>\n  </div>\n</footer>\n\n";
 
 /***/ }),
 /* 25 */
@@ -38767,7 +38781,7 @@ module.exports = "<div class=\"itemsShow\">\n    <div class='items-header'>\n   
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Browse Available Foods</h1>\n    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a><br>\n    <span class='token-counter'>Tokens remaining: <span ng-model='$ctrl.tokens'>{{$ctrl.tokens}}</span></span>\n    </div>\n  </div>\n    <div class='card-area'>\n      <div ng-repeat=\"item in $ctrl.items | filter:searchString | orderBy: '-created_at'\" class=\"item-card\">\n        <div class='card-content'>\n          <a ui-sref='itemsShow({ itemId: item._id})'>\n          <img ng-src={{item.image}} alt=\"Description\" />\n          <div class='posting-title'>{{item.title}}</div></a>\n          <div class='posting-description'>{{item.description}}</div>\n      \t   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>\n          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>\n          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>\n          <button ng-disabled=\"item.disabled || $ctrl.disabled\" ng-click='$ctrl.claimThisItem(item)' class='claim-button' style=\"float:right\">{{item.status ? item.status: 'Claim'}}</button>\n        </div>\n      </div>\n    </div>\n<div>\n";
+module.exports = "<div>\n  <div class='items-header'>\n    <div class='left-section'>\n  <h1>Browse Available Foods</h1>\n    <input type='text' ng-model='searchString' placeholder='Search For Items'><br><br>\n    </div>\n    <div class='right-section'>\n    <a ui-sref='userShow({ userId: $ctrl.cookie })'><button>Manage My Offers</button></a>\n    <a ui-sref=\"itemsNew\"><button>Create New Offer</button></a><br>\n    <span ng-show=\"$ctrl.tokens\"><span class='token-counter'>Tokens remaining: <span ng-model='$ctrl.tokens'>{{$ctrl.tokens}}</span></span></span>\n    <span ng-hide=\"$ctrl.tokens\"><span class='token-counter'>Add an item to earn tokens!</span></span>\n    </div>\n  </div>\n    <div class='card-area'>\n      <div ng-repeat=\"item in $ctrl.items | filter:searchString | orderBy: '-created_at'\" class=\"item-card\">\n        <div class='card-content'>\n          <a ui-sref='itemsShow({ itemId: item._id})'>\n          <img ng-src={{item.image}} alt=\"Description\" />\n          <div class='posting-title'>{{item.title}}</div></a>\n          <div class='posting-description'>{{item.description}}</div>\n      \t   <div class='posting-username'><strong>Posted by:</strong> {{item.userName}}</div>\n          <div class='posting-location'><strong>Location:</strong> {{item.city}}, {{item.state}}</div>\n          <div class='posting-time'>Posted {{item.created_at| date: 'short'}}</div>\n          <button ng-disabled=\"item.disabled || $ctrl.disabled\" ng-click='$ctrl.claimThisItem(item)' class='claim-button' style=\"float:right\">{{item.status ? item.status: 'Claim'}}</button>\n        </div>\n      </div>\n    </div>\n<div>\n";
 
 /***/ }),
 /* 29 */

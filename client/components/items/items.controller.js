@@ -43,7 +43,7 @@ function ItemsController($state, UsersService,ItemsService) {
   };
 
   function checkEligibility(tokens){
-    if (tokens <= 0) {
+    if (tokens <= 0 || tokens === null || tokens === undefined) {
       vm.disabled = true;
     } else {
       console.log('still eligible to claim');

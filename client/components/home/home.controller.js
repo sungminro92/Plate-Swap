@@ -1,6 +1,10 @@
+// In order to use the $state service and the UsersService
+// we created on our Welcome page, we needed to INJECT them into our controller using Angular's $.inject
 HomeController.$inject = ['$state','UsersService'];
 
+// This is where define the HomeController function and all the properties and methods that we can access in the Home page view
 function HomeController($state,UsersService) {
+  // setting a var vm to this allows us to establish a Controller function scope
   const vm = this;
   vm.addUser = addUser;
   vm.newUser = {};
