@@ -443,6 +443,7 @@ input.inputForm {
   margin-top: 10px;
   margin-left: 7px;
   font-size: 15px;
+  font-family: 'Dosis';
 }
 .newItemSubmit:hover {
     background-color: #008F95;
@@ -453,6 +454,7 @@ input.inputForm {
 .itemNewInfo {
   min-width: 500px;
   width: 40%;
+  font-family: 'Dosis';
 }
 .itemNewInfo p {
   display: block;
@@ -468,6 +470,7 @@ input.inputForm {
   padding: 15px;
   width: 400px;
   border-radius: 5px;
+  font-family: 'Dosis';
 }
 .error-messages {
   color: #E24E42;
@@ -495,6 +498,7 @@ input.inputForm {
   margin: 15px;
   padding: 15px;
   border-radius: 5px;
+  font-family: 'Dosis';
 
 }
 
@@ -506,6 +510,7 @@ input.inputForm {
   margin: 15px;
   padding: 15px;
   border-radius: 5px;
+  font-family: 'Dosis';
 }
 
 .imageWrap {
