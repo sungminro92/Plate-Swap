@@ -4,7 +4,7 @@
 
 * Team Members: Sungmin Ashley Ro, Harry Karambizi & Erin Martin
 * Heroku Link: https://mighty-waters-85896.herokuapp.com/
-* Github Repo: https://github.com/tjdals504/Project-3
+* Github Repo: https://github.com/sungminro92/Project-3
 
 # App Overview
 Food swaps have become more and more popular in Atlanta as well as across the country. PlateSwap is a web app that enables homemade food lovers to browse and swap their creations online. 
